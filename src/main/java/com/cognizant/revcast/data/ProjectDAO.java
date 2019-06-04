@@ -35,6 +35,29 @@ public class ProjectDAO {
 		return projectList;
 	}
 	
+	public Project getProjectById(String id) throws ClassNotFoundException, SQLException {
+		Project proj = null;
+		
+		Connection cnn = DBConnection.getConnection();
+		
+		PreparedStatement psmt = cnn.prepareStatement("select * from project where project_id=?");
+		psmt.setString(1, id);
+		ResultSet rs = psmt.executeQuery();
+
+		while (rs.next()) {
+			String bio = rs.getString("bio");
+			String projectId = rs.getString("project_id");
+			String projectName = rs.getString("prj_name");
+			String projectType = rs.getString("prj_type");
+			String associateId = rs.getString("associate_id");
+
+			proj = new Project(bio, projectId, projectName, projectType, associateId);
+		}
+
+		cnn.close();
+		return proj;
+	}
+	
 	public List<String> getAllDistinctBios() throws ClassNotFoundException, SQLException {
 		List<String> bioList = new ArrayList<String>();
 		

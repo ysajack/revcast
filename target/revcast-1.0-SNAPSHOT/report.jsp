@@ -53,52 +53,59 @@ Released   : 20131223
 
 
 <div class="wrapper" >
+<h3 style="text-align:center">Work In Progress...</h3>
 	<!--fill order section-->
 	<div id="tbldiv" class="container">
 
 		<table id="fill-table">
 			<tr>
 				<th>
+				BIO
+				</th>
+				<th>
 				Project
 				</th>
 				<th>
-				Jan-19
+				Jan
 				</th>
 				<th>
-				Feb-19
+				Feb
 				</th>
 				<th>
-				Apr-19
+				Apr
 				</th>
 				<th>
-				May-19
+				May
 				</th>
 				<th>
-				Jun-19
+				Jun
 				</th>
 				<th>
-				Jul-19
+				Jul
 				</th>
 				<th>
-				Aug-19
+				Aug
 				</th>
 				<th>
-				Sep-19
+				Sep
 				</th>
 				<th>
-				Oct-19
+				Oct
 				</th>
 				<th>
-				Nov-19
+				Nov
 				</th>
 				<th>
-				Dec-19
+				Dec
 				</th>
 		</tr>
 
 		<tr>
-			<td style="color: green">
+			<td>
 			Digital
+			</td>
+			<td style="color: green">
+			FDL
 			</td>
 			<td>
 				$ 16,800
@@ -134,6 +141,7 @@ Released   : 20131223
 				$ 16,800
 			</td>
 		</tr>
+	
 		</table>
 
 	<!--end of fill order section div-->

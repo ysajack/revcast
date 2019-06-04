@@ -5,15 +5,22 @@ public class ForecastView {
 	ForecastMonth month;
 	String associateId;
 	String associateName;
+	String projectId;
+	String projectName;
 	
 	public ForecastView() {}
-	public ForecastView(String year, ForecastMonth month, String associateId, String associateName) {
+	
+	public ForecastView(String year, ForecastMonth month, String associateId, String associateName, String projectId,
+			String projectName) {
 		super();
 		this.year = year;
 		this.month = month;
 		this.associateId = associateId;
-		this.associateName=associateName;
+		this.associateName = associateName;
+		this.projectId = projectId;
+		this.projectName = projectName;
 	}
+
 
 	public String getYear() {
 		return year;
@@ -44,5 +51,26 @@ public class ForecastView {
 	public void setAssociateName(String associateName) {
 		this.associateName = associateName;
 	}
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public void setMonth(ForecastMonth month) {
+		this.month = month;
+	}
+	
 	
 }

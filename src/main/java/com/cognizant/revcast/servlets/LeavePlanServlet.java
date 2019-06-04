@@ -88,6 +88,17 @@ public class LeavePlanServlet extends HttpServlet {
 		return str;
 	}
 	
+	public static String getLeavePlanViewOfAllAssociates() {
+		Gson gs = new Gson();
+		LeaveDAO ldao = new LeaveDAO();
+		List<LeavePlanView> lpvList = new ArrayList<LeavePlanView>();
+		
+		lpvList = ldao.getLeavePlanViewOfAllAssociates();
+		
+		String str = gs.toJson(lpvList);
+		return str;
+	}
+	
 	public static String getCurrentYear() {
 		LeaveDAO ldao = new LeaveDAO();
 		String year = null;

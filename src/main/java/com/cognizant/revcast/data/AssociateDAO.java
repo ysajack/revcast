@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.cognizant.revcast.models.Associate;
 
@@ -39,6 +41,38 @@ public class AssociateDAO {
 
 		cnn.close();
 		return associate;
+	}
+	
+	public List<Associate> getAllAssociates() throws ClassNotFoundException, SQLException {
+		List<Associate> assoList = new ArrayList<Associate>();
+	
+		Connection cnn = DBConnection.getConnection();
+		
+		PreparedStatement psmt = cnn.prepareStatement("select * from associate");
+		ResultSet rs = psmt.executeQuery();
+
+		while (rs.next()) {
+			String associateId = rs.getString("associate_id");
+			String associateName = rs.getString("associate_name");
+			String designation = rs.getString("designation");
+			String status = rs.getString("status");
+			String revcat = rs.getString("rev_type");
+			String practice = rs.getString("practice");
+			String onsiteOffshore = rs.getString("onsite_offshore");
+			String revType = rs.getString("rev_type");
+			String projectStart = rs.getString("prj_start");
+			String projectEnd = rs.getString("prj_end");
+			int allocation = rs.getInt("allocation");
+			int rate = rs.getInt("rate");
+			String projectId = rs.getString("project_id");
+
+			Associate associate = new Associate(associateId, associateName, designation, status, revcat, practice,
+					onsiteOffshore, revType, projectStart, projectEnd, allocation, rate, projectId);
+			assoList.add(associate)
+;		}
+
+		cnn.close();
+		return assoList;
 	}
 	
 }

@@ -101,11 +101,12 @@ Released   : 20131223
 			Dec
 			</th>
 	</tr>
-
+	
+	<% ForecastView[] fcvList = new Gson().fromJson(ForecastServlet.getForecastOfAllAssociates(), ForecastView[].class); 
+	   for(ForecastView fcv : fcvList){%>
 	<tr>
-	<% ForecastView fcv = new Gson().fromJson(ForecastServlet.getForecastByAssociate("A12345"), ForecastView.class); %>
 		<td>
-		Client Support project
+		<%= fcv.getProjectName() %>
 		</td>
 		<td>
 		<%= fcv.getAssociateName() %>
@@ -150,6 +151,8 @@ Released   : 20131223
 			$ <%= fcv.getMonth().getDec() %>
 		</td>
 	</tr>
+	<%} %>
+	
 	</table>
 
 	<!--end of fill order section div-->

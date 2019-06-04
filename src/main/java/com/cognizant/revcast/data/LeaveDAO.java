@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import com.cognizant.revcast.models.Associate;
 import com.cognizant.revcast.models.Leave;
 import com.cognizant.revcast.models.LeavePlanView;
 import com.cognizant.revcast.models.Month;
@@ -64,6 +66,25 @@ public class LeaveDAO {
 		cnn.close();
 		return leaveList;
 	}
+	
+	public List<LeavePlanView> getLeavePlanViewOfAllAssociates(){
+		AssociateDAO adao = new AssociateDAO();
+		List<LeavePlanView> lpvList = new ArrayList<LeavePlanView>();
+	
+		try {
+			List<Associate> assoList = adao.getAllAssociates();
+			
+			for(Associate asso : assoList) {
+				LeavePlanView lpv = getLeavePlanViewByAssociate(asso.getAssociateId());
+				lpvList.add(lpv);
+			}
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return lpvList;
+	}
 
 	public LeavePlanView getLeavePlanViewByAssociate(String assoId) throws ClassNotFoundException, SQLException {
 		List<Leave> leaveList = getAllLeavesByAssociate(assoId);
@@ -72,6 +93,7 @@ public class LeaveDAO {
 		int[] sumMonth = new int[12];
 
 		for(Leave lv : leaveList) {
+		
 			switch(lv.getMonth()) {
 			case "January":
 				sumMonth[0] += lv.getNumOfdays();
@@ -122,9 +144,18 @@ public class LeaveDAO {
 				month.setDec(sumMonth[11]);
 				break;
 			}
+			
+			lpv.setYear(lv.getYear());
 		}
-
-		lpv.setYear(leaveList.get(0).getYear());
+		
+		//If no leave ever taken yet by an associate, get the current year.
+		if(lpv.getYear() == null) {
+			Calendar now = Calendar.getInstance();
+			int year = now.get(Calendar.YEAR);
+			String yearStr = String.valueOf(year);
+			lpv.setYear(yearStr);
+		}
+		
 		lpv.setMonth(month);
 		lpv.setAssociateId(assoId);
 		AssociateDAO adao = new AssociateDAO();

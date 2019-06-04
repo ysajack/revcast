@@ -63,7 +63,7 @@ Released   : 20131223
 		<table id="fill-table">
 			<tr>
 			<th>
-				ID
+				Asso.ID
 				</th>
 				<th>
 				Name
@@ -108,9 +108,10 @@ Released   : 20131223
 				Dec
 				</th>
 		</tr>
-
+		
+		<% LeavePlanView[] lpvList = new Gson().fromJson(LeavePlanServlet.getLeavePlanViewOfAllAssociates(), LeavePlanView[].class); 
+		   for(LeavePlanView lpv : lpvList){%>
 		<tr>
-		<% LeavePlanView lpv = new Gson().fromJson(LeavePlanServlet.getLeavePlanView(), LeavePlanView.class); %>
 			<td>
 			<%= lpv.getAssociateId() %>
 			</td>
@@ -157,6 +158,7 @@ Released   : 20131223
 			<%= lpv.getMonth().getDec() %>
 		</td>
 		</tr>
+		<%}%>
 		</table>
 	<!--end of fill order section div-->
 	<div>

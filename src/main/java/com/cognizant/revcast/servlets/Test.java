@@ -6,11 +6,14 @@ import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Calendar;
 
 import com.cognizant.revcast.data.AssociateDAO;
 import com.cognizant.revcast.data.LeaveDAO;
 import com.cognizant.revcast.data.ProjectDAO;
+import com.cognizant.revcast.models.Associate;
 import com.cognizant.revcast.models.Leave;
+import com.cognizant.revcast.models.LeavePlanView;
 
 public class Test {
 
@@ -18,14 +21,24 @@ public class Test {
 		// TODO Auto-generated method stub
 		//ProjectServlet ps = new ProjectServlet();
 		
-		//System.out.println(ProjectServlet.getAllProjects());
-	
+		for(LeavePlanView lpv : new LeaveDAO().getLeavePlanViewOfAllAssociates()) {
+			System.out.println(lpv.getYear());
+			System.out.println(lpv);
+			System.out.println(lpv.getAssociateId());
+		} 
+		
+		
+	/*
 		try {
-			System.out.println(new ProjectDAO().getProjectAssociateViewByBio("Digital"));
+			for(Associate a : new AssociateDAO().getAllAssociates()) {
+				System.out.println(a.getAssociateId());
+			}
+			
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} */
+		
 	//	System.out.println(LeavePlanServlet.getCurrentYear());
 		LeaveDAO ldao = new LeaveDAO();
 		//Leave leave = new Leave("2019","June", 1, "6/5", null, "A12345");
