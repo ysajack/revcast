@@ -3,11 +3,14 @@ package com.cognizant.revcast.servlets;
 import com.cognizant.revcast.data.LeaveDAO;
 import com.cognizant.revcast.models.Leave;
 import com.cognizant.revcast.models.LeavePlanView;
-import com.google.appengine.repackaged.com.google.gson.Gson;
+//import com.google.appengine.repackaged.com.google.gson.Gson;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -77,7 +80,6 @@ public class LeavePlanServlet extends HttpServlet {
 		
 		try {
 			lpv = (LeavePlanView) ldao.getLeavePlanViewByAssociate("A12345");
-			
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

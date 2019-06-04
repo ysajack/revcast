@@ -735,6 +735,7 @@
 #leave-entry                                 {width:350px;}
 #leaveDetails                               {width:450px;}
 #editLeave                                  {width:450px;}
+#filterdiv                                   {margin: 20px auto 20px 100px;}
 .button {
 	display: inline-block;
 	padding: .5em 2em;

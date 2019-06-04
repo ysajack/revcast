@@ -14,11 +14,38 @@ import com.cognizant.revcast.models.Month;
 public class LeaveDAO {
 	public List<Leave> getAllLeavesByAssociate(String assoId) throws ClassNotFoundException, SQLException {
 		List<Leave> leaveList = new ArrayList<Leave>();
-
+		
 		Connection cnn = DBConnection.getConnection();
+		
 		//sql to get only the records for the current year
 		PreparedStatement psmt = cnn.prepareStatement("select * from leaveplan where associate_id=? and year_taken = (select DISTINCT year_taken from leaveplan order by year_taken desc LIMIT 1)");
 		psmt.setString(1, assoId);
+		ResultSet rs = psmt.executeQuery();
+
+		while (rs.next()) {
+			int id = rs.getInt("id");
+			String year = rs.getString("year_taken");
+			String month = rs.getString("month_taken");
+			int numOfdays = rs.getInt("num_of_days");
+			String dateTaken = rs.getString("date_taken");
+			String leaveStatus = rs.getString("leave_status");
+			String comments = rs.getString("comments");
+			String associateId=rs.getString("associate_id");
+
+			leaveList.add(new Leave(id,year, month, numOfdays, dateTaken, leaveStatus,comments,associateId));
+		}
+
+		cnn.close();
+		return leaveList;
+	}
+	
+	public List<Leave> getAllLeavesOfAllAssociates() throws ClassNotFoundException, SQLException {
+		List<Leave> leaveList = new ArrayList<Leave>();
+		
+		Connection cnn = DBConnection.getConnection();
+		
+		//sql to get only the records for the current year
+		PreparedStatement psmt = cnn.prepareStatement("select * from leaveplan where year_taken = (select DISTINCT year_taken from leaveplan order by year_taken desc LIMIT 1)");
 		ResultSet rs = psmt.executeQuery();
 
 		while (rs.next()) {
@@ -99,13 +126,17 @@ public class LeaveDAO {
 
 		lpv.setYear(leaveList.get(0).getYear());
 		lpv.setMonth(month);
-		lpv.setAssociateId(leaveList.get(0).getAssociateId());
+		lpv.setAssociateId(assoId);
+		AssociateDAO adao = new AssociateDAO();
+		String name = adao.getAssociateById(assoId).getAssociateName();
+		lpv.setAssociateName(name);
 		
 		return lpv;
 	}
 	
 	public String getCurrentYear() throws SQLException, ClassNotFoundException {
 		Connection cnn = DBConnection.getConnection();
+		
 		PreparedStatement psmt = cnn.prepareStatement("select DISTINCT year_taken from leaveplan order by year_taken desc LIMIT 1");
 		ResultSet rs = psmt.executeQuery();
 		String year = null;
@@ -170,6 +201,7 @@ public class LeaveDAO {
 		List<Leave> leaveList = new ArrayList<Leave>();
 
 		Connection cnn = DBConnection.getConnection();
+		
 		//sql to get only the records for the current year
 		PreparedStatement psmt = cnn.prepareStatement("select * from leaveplan where associate_id=? and year_taken=? and month_taken=?");
 		psmt.setString(1, assoId);
@@ -197,7 +229,9 @@ public class LeaveDAO {
 	public Leave getLeaveById(String leaveId) throws ClassNotFoundException, SQLException {
 		Leave leave = null;
 		int lid=Integer.parseInt(leaveId);
+		
 		Connection cnn = DBConnection.getConnection();
+		
 		PreparedStatement psmt = cnn.prepareStatement("select * from leaveplan where id=?");
 		psmt.setInt(1, lid);
 		ResultSet rs = psmt.executeQuery();

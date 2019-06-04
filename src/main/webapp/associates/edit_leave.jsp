@@ -16,7 +16,7 @@ Released   : 20131223
 <%@ page import="com.cognizant.revcast.servlets.LeaveDetailsServlet" %>
 <%@ page import="com.cognizant.revcast.models.Leave" %>
 <%@ page import="java.util.List" %>
-<%@ page import = "com.google.appengine.repackaged.com.google.gson.Gson" %>
+<%@ page import = "com.google.gson.Gson" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -174,7 +174,7 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 				</tr>
 			   <tr>
 					<td>Number of Days</td>
-					<td><input type="number" name="num_of_days" min="1" max="3" value="<%= numOfDays %>" required /></td>
+					<td><input type="number" name="num_of_days" min="0" max="3" value="<%= numOfDays %>" required /></td>
 				</tr>
 				<tr>
 					<td>Date(s) Taken</td>

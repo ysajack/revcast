@@ -13,7 +13,7 @@ Released   : 20131223
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.cognizant.revcast.models.Project" %>
 <%@ page import="java.util.List" %>
-<%@ page import = "com.google.appengine.repackaged.com.google.gson.Gson" %>
+<%@ page import = "com.google.gson.Gson" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

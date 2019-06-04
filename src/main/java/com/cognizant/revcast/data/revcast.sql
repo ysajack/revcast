@@ -30,19 +30,21 @@ create table associate(
 
 create table forecast(
   id int not null primary key auto_increment,
-  jan int(13) null,
-  feb int(13) null,
-  mar int(13) null,
-  apr int(13) null,
-  may int(13) null,
-  jun int(13) null,
-  jul int(13) null,
-  aug int(13) null,
-  sep int(13) null,
-  oct int(13) null,
-  nov int(13) null,
-  decbr int(13) null,
-  associate_id varchar(26) not null
+  jan double null,
+  feb double null,
+  mar double null,
+  apr double null,
+  may double null,
+  jun double null,
+  jul double null,
+  aug double null,
+  sep double null,
+  oct double null,
+  nov double null,
+  decbr double null,
+  associate_id varchar(26) not null,
+  forecast_year varchar(13) not null,
+  project_id varchar(26) not null
 );
 
 create table leaveplan(
@@ -56,8 +58,23 @@ create table leaveplan(
   associate_id varchar(26) not null
 );
 
+create table holiday(
+  id int not null primary key auto_increment,
+  holiday_year varchar(13) null,
+  holiday_month varchar(13) null,
+  num_of_holidays int(13) null,
+  holiday_dates varchar(50) null,
+  comments varchar(50) null,
+  onsite_offshore varchar(13) not null
+);
+
+
 insert into project values (1,'Digital','P1234567','Find Doctor Location','BTM','A12345');
+insert into project values (2,'Digital','P1234568','Find Doctor Location 2','BTM','A12346');
+insert into project values (3,'CMS','P1234569','Records Management','BTM','A12347');
 insert into associate values (1,'A12345','Apple Orange','Associate','Active','BL','QE&A','Onsite','TM','5/1/19','TBD',100,120,'P1234567');
+insert into associate values (2,'A12346','Carrot Peach','Associate','Active','BL','QE&A','Onsite','TM','5/1/19','TBD',100,100,'P1234568');
+insert into associate values (3,'A12347','Grape Banana','Associate','Active','BL','QE&A','Onsite','TM','5/1/19','TBD',100,100,'P1234569');
 insert into forecast values (1,15000,18000,20000,14000,13000,12500,15000,15000,15000,15000,15000,15000,'P1234567');
 insert into leaveplan values(1,'2019','April',2,'4/2,4/3','Confirmed','LA trip','A12345');
 insert into leaveplan values(3,'2019','May',1,'5/1','Confirmed','Personal','A12345');

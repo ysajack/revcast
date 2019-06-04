@@ -14,7 +14,7 @@ Released   : 20131223
 <%@ page import="com.cognizant.revcast.servlets.LeavePlanServlet" %>
 <%@ page import="com.cognizant.revcast.models.LeavePlanView" %>
 <%@ page import="java.util.List" %>
-<%@ page import = "com.google.appengine.repackaged.com.google.gson.Gson" %>
+<%@ page import = "com.google.gson.Gson" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -27,7 +27,7 @@ Released   : 20131223
 <script 
 src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 </script>
-<script src="scripts.js"></script>
+<script src="../scripts.js"></script>
 
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
 
@@ -156,31 +156,6 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 	<fieldset>
 	<form action="/leaveRequest" method="post">
 			<table style="with: 50%">
-			<!--  
-				<tr>
-					<td>Year</td>
-					<td><input type="text" name="year_taken" value="${LeavePlanServlet.getCurrentYear()}" required /></td>
-				</tr>
-				<tr>
-					<td>Month</td>
-					<td>
-						<select name="month_taken" required>
-						    <option value="January" selected>January</option>
-						    <option value="February">February</option>
-						    <option value="March">March</option>
-						    <option value="April">April</option>
-						    <option value="May">May</option>
-						    <option value="June">June</option>
-						    <option value="July">July</option>
-						    <option value="August">August</option>
-						    <option value="September">September</option>
-						    <option value="October">October</option>
-						    <option value="November">November</option>
-						    <option value="December">December</option>
-  						</select>
-					</td>
-				</tr> 
-			-->
 				<tr>
 					<td>Number of Days</td>
 					<td><input type="number" name="num_of_days" value="1" min="1" max="3" onchange="checkNumOfDays(this.value)" required/></td>

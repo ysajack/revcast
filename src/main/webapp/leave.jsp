@@ -13,7 +13,9 @@ Released   : 20131223
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.cognizant.revcast.models.Project" %>
 <%@ page import="java.util.List" %>
-<%@ page import = "com.google.appengine.repackaged.com.google.gson.Gson" %>
+<%@ page import = "com.google.gson.Gson" %>
+<%@ page import="com.cognizant.revcast.servlets.LeavePlanServlet" %>
+<%@ page import="com.cognizant.revcast.models.LeavePlanView" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -25,6 +27,8 @@ Released   : 20131223
 <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="scripts.js" ></script>
 
 </head>
 <body>
@@ -58,81 +62,100 @@ Released   : 20131223
 
 		<table id="fill-table">
 			<tr>
-				<th>
-				Associate Name
+			<th>
+				ID
 				</th>
 				<th>
-				Jan-19
+				Name
 				</th>
 				<th>
-				Feb-19
+				Year
 				</th>
 				<th>
-				Apr-19
+				Jan
 				</th>
 				<th>
-				May-19
+				Feb
 				</th>
 				<th>
-				Jun-19
+				Mar
 				</th>
 				<th>
-				Jul-19
+				Apr
 				</th>
 				<th>
-				Aug-19
+				May
 				</th>
 				<th>
-				Sep-19
+				Jun
 				</th>
 				<th>
-				Oct-19
+				Jul
 				</th>
 				<th>
-				Nov-19
+				Aug
 				</th>
 				<th>
-				Dec-19
+				Sep
+				</th>
+				<th>
+				Oct
+				</th>
+				<th>
+				Nov
+				</th>
+				<th>
+				Dec
 				</th>
 		</tr>
 
 		<tr>
-			<td style="color: green">
-			Apple Orange
+		<% LeavePlanView lpv = new Gson().fromJson(LeavePlanServlet.getLeavePlanView(), LeavePlanView.class); %>
+			<td>
+			<%= lpv.getAssociateId() %>
 			</td>
 			<td>
-				No leave
+			<%= lpv.getAssociateName() %>
 			</td>
 			<td>
-				No leave
+			<%= lpv.getYear() %>
 			</td>
-			<td>
-				3/15
-			</td>
-			<td>
-				No leave
-			</td>
-			<td>
-				No leave
-			</td>
-			<td>
-				No leave
-			</td>
-			<td>
-				No leave
-			</td>
-			<td>
-				No leave
-			</td>
-			<td>
-				No leave
-			</td>
-			<td>
-				No leave
-			</td>
-			<td>
-				No leave
-			</td>
+		<td>
+			<%= lpv.getMonth().getJan() %>
+		</td>
+		<td>
+			<%= lpv.getMonth().getFeb() %>
+		</td>
+		<td>
+			<%= lpv.getMonth().getMar() %>
+		</td>
+		<td>
+			<%= lpv.getMonth().getApr() %>
+		</td>
+		<td>
+			<%= lpv.getMonth().getMay() %>
+		</td>
+		<td>
+			<%= lpv.getMonth().getJun() %>
+		</td>
+		<td>
+			<%= lpv.getMonth().getJul() %>
+		</td>
+		<td>
+			<%= lpv.getMonth().getAug() %>
+		</td>
+		<td>
+			<%= lpv.getMonth().getSep() %>
+		</td>
+		<td>
+			<%= lpv.getMonth().getOct() %>
+		</td>
+		<td>
+			<%= lpv.getMonth().getNov() %>
+		</td>
+		<td>
+			<%= lpv.getMonth().getDec() %>
+		</td>
 		</tr>
 		</table>
 	<!--end of fill order section div-->

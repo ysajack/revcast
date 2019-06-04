@@ -1,7 +1,17 @@
 com/cognizant/revcast/models/LeavePlanView.class
 com/cognizant/revcast/models/Month.class
+com/cognizant/revcast/servlets/ForecastServlet.class
+com/cognizant/revcast/servlets/ProjectService.class
+com/cognizant/revcast/servlets/ProjectFilterServlet.class
+com/cognizant/revcast/models/ForecastView.class
+com/cognizant/revcast/servlets/ResourceFilterServlet.class
+com/cognizant/revcast/models/ProjectBean.class
 com/cognizant/revcast/smoke/HelloAppEngine.class
+com/cognizant/revcast/data/GCPConnection.class
+com/cognizant/revcast/data/AssociateDAO.class
+com/cognizant/revcast/models/ForecastMonth.class
 com/cognizant/revcast/models/Associate.class
+com/cognizant/revcast/servlets/ProjectDropdownServlet.class
 com/cognizant/revcast/servlets/Test.class
 com/cognizant/revcast/servlets/LeaveDetailsServlet.class
 com/cognizant/revcast/data/LeaveDAO.class

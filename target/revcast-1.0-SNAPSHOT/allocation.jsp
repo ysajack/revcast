@@ -14,7 +14,7 @@ Released   : 20131223
 <%@ page import="com.cognizant.revcast.servlets.ProjectServlet" %>
 <%@ page import="com.cognizant.revcast.models.ProjectAssociateView" %>
 <%@ page import="java.util.List" %>
-<%@ page import = "com.google.appengine.repackaged.com.google.gson.Gson" %>
+<%@ page import = "com.google.gson.Gson" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -26,6 +26,8 @@ Released   : 20131223
 <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="scripts.js" ></script>
 
 </head>
 <body>
@@ -57,6 +59,9 @@ Released   : 20131223
 	<table id="fill-table">
 		<tr>
 			<th>
+			BIO
+			</th>
+			<th>
 			Project
 			</th>
 			<th>
@@ -84,7 +89,7 @@ Released   : 20131223
 			Start
 			</th>
 			<th>
-			Project End Date
+			End
 			</th>
 			<th>
 			Allocation
@@ -93,10 +98,14 @@ Released   : 20131223
 			Rate Card
 			</th>
 	</tr>
-
+		<%
+		ProjectAssociateView[] paList = new Gson().fromJson(ProjectServlet.getProjectAssociateView(), ProjectAssociateView[].class); 
+		for(ProjectAssociateView pa : paList){
+	%>
 	<tr>
-	<% ProjectAssociateView[] paList = new Gson().fromJson(ProjectServlet.getProjectAssociateView(), ProjectAssociateView[].class); 
-		for(ProjectAssociateView pa : paList){%>
+		<td>
+			<%= pa.getProject().getBio() %>
+		</td>
 		<td>
 			<%= pa.getProject().getProjectId() %>
 		</td>
@@ -104,13 +113,13 @@ Released   : 20131223
 			<%= pa.getProject().getProjectName() %>
 		</td>
 		<td>
-			<%= pa.getProject().getProjectType() %>
-		</td>
-		<td>
 			<%= pa.getAssociate().getAssociateId() %>
 		</td>
 		<td>
 			<%= pa.getAssociate().getAssociateName() %>
+		</td>
+		<td>
+			<%= pa.getAssociate().getStatus() %>
 		<td>
 			<%= pa.getAssociate().getRevcat() %>
 		</td>
@@ -132,8 +141,8 @@ Released   : 20131223
 		<td>
 			<%= pa.getAssociate().getRate() %>
 		</td>
-		<%}%>
 	</tr>
+	<%}%>
 	</table>
 
 	<!--end of fill order section div-->

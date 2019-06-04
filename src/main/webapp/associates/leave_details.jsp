@@ -16,7 +16,7 @@ Released   : 20131223
 <%@ page import="com.cognizant.revcast.models.Leave" %>
 <%@ page import="com.cognizant.revcast.servlets.LeaveDetailsServlet" %>
 <%@ page import="java.util.List" %>
-<%@ page import = "com.google.appengine.repackaged.com.google.gson.Gson" %>
+<%@ page import="com.google.gson.Gson" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -29,7 +29,7 @@ Released   : 20131223
 <script 
 src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 </script>
-<script src="scripts.js"></script>
+<script src="../scripts.js"></script>
 
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
 

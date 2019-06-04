@@ -4,13 +4,15 @@ public class LeavePlanView {
 	String year;
 	Month month;
 	String associateId;
+	String associateName;
 	
 	public LeavePlanView() {}
-	public LeavePlanView(String year, Month month, String associateId) {
+	public LeavePlanView(String year, Month month, String associateId, String associateName) {
 		super();
 		this.year = year;
 		this.month = month;
 		this.associateId = associateId;
+		this.associateName=associateName;
 	}
 
 	public String getYear() {
@@ -35,6 +37,12 @@ public class LeavePlanView {
 
 	public void setAssociateId(String associateId) {
 		this.associateId = associateId;
+	}
+	public String getAssociateName() {
+		return associateName;
+	}
+	public void setAssociateName(String associateName) {
+		this.associateName = associateName;
 	}
 	
 }

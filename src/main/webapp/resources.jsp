@@ -13,8 +13,9 @@ Released   : 20131223
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.cognizant.revcast.servlets.ProjectServlet" %>
 <%@ page import="com.cognizant.revcast.models.ProjectAssociateView" %>
+<%@ page import="com.cognizant.revcast.models.ProjectBean" %>
 <%@ page import="java.util.List" %>
-<%@ page import = "com.google.appengine.repackaged.com.google.gson.Gson" %>
+<%@ page import = "com.google.gson.Gson" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -26,6 +27,8 @@ Released   : 20131223
 <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="scripts.js" ></script>
 
 </head>
 <body>
@@ -52,6 +55,38 @@ Released   : 20131223
 </div>
 
 <div class="wrapper" >
+
+<div id="filterdiv">
+	<table style="width:20%">
+		<tr>
+			<th width="50px">
+				<!-- BIO Dropdown -->
+				<select id="bybio-res" name="bio-res">
+					<option value="All BIOs">All BIOs</option>
+					<%String[] bioList = new Gson().fromJson(ProjectServlet.getAllDistinctBios(), String[].class);  
+					 for(String bio : bioList){%>
+					<option value="<%= bio %>"><%= bio %></option>
+					<%} %>
+				</select>
+			</th>
+			
+			<th></th>
+			
+			<th width="50px">
+				<!-- Project Dropdown Default list - It will be updated once BIO is selected-->
+				<!-- The project dropdown will come from AJAX/scripts.js which has contents comming from ProjectDropdownServlet -->
+				<select id="byproject-res"> 
+				<option value="All Projects" name="allprojects">All Projects</option>
+				<%ProjectBean[] prjList = new Gson().fromJson(ProjectServlet.getAllDistinctProjects(), ProjectBean[].class);  
+					 for(ProjectBean prj : prjList){%>
+					 <option value="<%= prj.getProjectId() %>"><%= prj.getProjectName() %></option>
+					<%} %>
+				</select>
+			</th>
+		</tr>
+	</table>
+</div>
+
 	<!--fill order section-->
 	<div id="tbldiv" class="container">
 	<table id="fill-table">
@@ -90,10 +125,11 @@ Released   : 20131223
 			Project Name
 			</th>
 	</tr>
-
+		<%
+			ProjectAssociateView[] paList = new Gson().fromJson(ProjectServlet.getProjectAssociateView(), ProjectAssociateView[].class); 
+				for(ProjectAssociateView pa : paList){
+		%>
 	<tr>
-		<% ProjectAssociateView[] paList = new Gson().fromJson(ProjectServlet.getProjectAssociateView(), ProjectAssociateView[].class); 
-		for(ProjectAssociateView pa : paList){%>
 		<td>
 			<%= pa.getAssociate().getAssociateId() %>
 		</td>
@@ -127,8 +163,8 @@ Released   : 20131223
 		<td>
 			<%= pa.getProject().getProjectName() %>
 		</td>
-		<%}%>
 	</tr>
+	<%}%>
 	</table>
 
 	<!--end of fill order section div-->

@@ -13,6 +13,9 @@ Released   : 20131223
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.cognizant.revcast.servlets.ForecastServlet" %>
+<%@ page import="com.cognizant.revcast.models.ForecastView" %>
+<%@ page import = "com.google.gson.Gson" %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title></title>
 <meta name="keywords" content="" />
@@ -56,6 +59,9 @@ Released   : 20131223
 			Project
 			</th>
 			<th>
+			Associate
+			</th>
+			<th>
 			Year
 			</th>
 			<th>
@@ -63,6 +69,9 @@ Released   : 20131223
 			</th>
 			<th>
 			Feb
+			</th>
+			<th>
+			Mar
 			</th>
 			<th>
 			Apr
@@ -94,44 +103,51 @@ Released   : 20131223
 	</tr>
 
 	<tr>
-		<td style="color: green">
-		Digital
+	<% ForecastView fcv = new Gson().fromJson(ForecastServlet.getForecastByAssociate("A12345"), ForecastView.class); %>
+		<td>
+		Client Support project
 		</td>
 		<td>
-		2019
+		<%= fcv.getAssociateName() %>
 		</td>
 		<td>
-			$ 16,800
+		<%= fcv.getYear() %>
 		</td>
 		<td>
-			$ 16,800
+			$ <%= fcv.getMonth().getJan() %>
 		</td>
 		<td>
-			$ 16,800
+			$ <%= fcv.getMonth().getFeb() %>
 		</td>
 		<td>
-			$ 17,600
+			$ <%= fcv.getMonth().getMar() %>
 		</td>
 		<td>
-			$ 15,400
+			$ <%= fcv.getMonth().getApr() %>
 		</td>
 		<td>
-			$ 16,800
+			$ <%= fcv.getMonth().getMay() %>
 		</td>
 		<td>
-			$ 16,800
+			$ <%= fcv.getMonth().getJun() %>
 		</td>
 		<td>
-			$ 16,800
+			$ <%= fcv.getMonth().getJul() %>
 		</td>
 		<td>
-			$ 16,800
+			$ <%= fcv.getMonth().getAug() %>
 		</td>
 		<td>
-			$ 16,800
+			$ <%= fcv.getMonth().getSep() %>
 		</td>
 		<td>
-			$ 16,800
+			$ <%= fcv.getMonth().getOct() %>
+		</td>
+		<td>
+			$ <%= fcv.getMonth().getNov() %>
+		</td>
+		<td>
+			$ <%= fcv.getMonth().getDec() %>
 		</td>
 	</tr>
 	</table>
