@@ -8,17 +8,29 @@ import com.cognizant.revcast.models.ForecastView;
 import com.cognizant.revcast.models.ProjectAssociateView;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet(name = "ForecastServlet", value = "/forecast")
 public class ForecastServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {		
+		response.setContentType("text/plain");	
+		
+		if(getForecastOfAllAssociates() != null) {
+			response.getWriter().println("Success");
+		}	
+	}
 
 	public static String getProjectAssociateView() {
 		Gson gs = new Gson();

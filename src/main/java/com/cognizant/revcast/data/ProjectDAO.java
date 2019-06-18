@@ -264,5 +264,46 @@ public class ProjectDAO {
 		cnn.close();
 		return paList;
 	}
+	
+	public List<ProjectBean> getAllProjectBeans() throws ClassNotFoundException, SQLException {
+		List<ProjectBean> projectList = new ArrayList<ProjectBean>();
+		
+		Connection cnn = DBConnection.getConnection();
+		
+		PreparedStatement psmt = cnn.prepareStatement("select * from project");
+		ResultSet rs = psmt.executeQuery();
+
+		while (rs.next()) {
+			String bio = rs.getString("bio");
+			String projectId = rs.getString("project_id");
+			String projectName = rs.getString("prj_name");
+
+			projectList.add(new ProjectBean(bio, projectId, projectName));
+		}
+
+		cnn.close();
+		return projectList;
+	}
+	
+	public ProjectBean getProjectBeanById(String id) throws ClassNotFoundException, SQLException {
+		ProjectBean proj = null;
+		
+		Connection cnn = DBConnection.getConnection();
+		
+		PreparedStatement psmt = cnn.prepareStatement("select * from project where project_id=?");
+		psmt.setString(1, id);
+		ResultSet rs = psmt.executeQuery();
+
+		while (rs.next()) {
+			String bio = rs.getString("bio");
+			String projectId = rs.getString("project_id");
+			String projectName = rs.getString("prj_name");
+
+			proj = new ProjectBean(bio, projectId, projectName);
+		}
+
+		cnn.close();
+		return proj;
+	}
 
 }

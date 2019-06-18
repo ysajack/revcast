@@ -148,3 +148,12 @@ $(document).ready(function() {
 });
 
 /********************/
+//Loading
+$(document).ready(function() {
+	$.get("forecast", function(res) {
+		if(res != null){
+			document.getElementById("loader").style.display = "none";
+			document.getElementById("loadedcontents").style.display = "block";
+		}		
+	});
+});

@@ -20,11 +20,15 @@ Released   : 20131223
 <title></title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900|Quicksand:400,700|Questrial" rel="stylesheet" />
 <link href="default.css" rel="stylesheet" type="text/css" media="all" />
 <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="scripts.js" ></script>
 
 </head>
 <body>
@@ -52,7 +56,9 @@ Released   : 20131223
 
 <div class="wrapper" >
 	<!--fill order section-->
+	<div id="loader"></div>
 	<div id="tbldiv" class="container">
+<div id="loadedcontents" style="display:none;">
 	<table id="fill-table">
 		<tr>
 			<th>
@@ -154,7 +160,7 @@ Released   : 20131223
 	<%} %>
 	
 	</table>
-
+</div>	
 	<!--end of fill order section div-->
 	<div>
 

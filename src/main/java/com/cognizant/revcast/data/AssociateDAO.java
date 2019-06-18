@@ -68,8 +68,8 @@ public class AssociateDAO {
 
 			Associate associate = new Associate(associateId, associateName, designation, status, revcat, practice,
 					onsiteOffshore, revType, projectStart, projectEnd, allocation, rate, projectId);
-			assoList.add(associate)
-;		}
+			assoList.add(associate);		
+		}
 
 		cnn.close();
 		return assoList;
