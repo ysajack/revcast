@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cognizant.revcast.data.ProjectDAO;
+import com.cognizant.revcast.models.Project;
 import com.cognizant.revcast.models.ProjectAssociateView;
 
 @WebServlet(name = "ResourceFilterServlet", value = "/resourceFilter")
@@ -24,6 +25,7 @@ public class ResourceFilterServlet extends HttpServlet {
 		String bio = request.getParameter("bio");
 		ProjectDAO prjdao = new ProjectDAO();
 		List<ProjectAssociateView> pavList = new ArrayList<ProjectAssociateView>();
+		Project prj = null;
 
 		try {
 			if(prjId == null || prjId.equals("") || prjId.equals("All Projects")) {
@@ -36,6 +38,7 @@ public class ResourceFilterServlet extends HttpServlet {
 			}
 			else {
 				pavList = prjdao.getProjectAssociateViewByProjectId(prjId);
+				prj = prjdao.getProjectById(prjId);
 			}
 		
 		} catch (ClassNotFoundException | SQLException e) {
@@ -81,45 +84,76 @@ public class ResourceFilterServlet extends HttpServlet {
 				"			Project Name\n" + 
 				"			</th>\n" +
 				"	</tr>");
-		
-		for (ProjectAssociateView pav : pavList) {
+		if(pavList.isEmpty()) {
 			out.println("<tr>");
 			out.println("<td>");
-			out.println(pav.getAssociate().getAssociateId());
 			out.println("</td>");
 			out.println("<td>");
-			out.println(pav.getAssociate().getAssociateName());
 			out.println("</td>");
 			out.println("<td>");
-			out.println(pav.getAssociate().getDesignation());
 			out.println("</td>");
 			out.println("<td>");
-			out.println(pav.getAssociate().getStatus());
 			out.println("</td>");
 			out.println("<td>");
-			out.println(pav.getAssociate().getRevcat());
 			out.println("</td>");
 			out.println("<td>");
-			out.println(pav.getAssociate().getPractice());
 			out.println("</td>");
 			out.println("<td>");
-			out.println(pav.getAssociate().getOnsiteOffshore());
 			out.println("</td>");
 			out.println("<td>");
-			out.println(pav.getAssociate().getRevType());
 			out.println("</td>");
 			out.println("<td>");
-			out.println(pav.getProject().getBio());
+			out.println(prj.getBio());
 			out.println("</td>");
 			out.println("<td>");
-			out.println(pav.getProject().getProjectId());
+			out.println(prj.getProjectId());
 			out.println("</td>");
 			out.println("<td>");
-			out.println(pav.getProject().getProjectName());
+			out.println(prj.getProjectName());
 			out.println("</td>");
 			out.println("</tr>");
 		}
-
+		else {
+			for (ProjectAssociateView pav : pavList) {
+				out.println("<tr>");
+				out.println("<td>");
+				out.println(pav.getAssociate().getAssociateId());
+				out.println("</td>");
+				out.println("<td>");
+				out.println(pav.getAssociate().getAssociateName());
+				out.println("</td>");
+				out.println("<td>");
+				out.println(pav.getAssociate().getDesignation());
+				out.println("</td>");
+				out.println("<td>");
+				out.println(pav.getAssociate().getStatus());
+				out.println("</td>");
+				out.println("<td>");
+				out.println(pav.getAssociate().getRevcat());
+				out.println("</td>");
+				out.println("<td>");
+				out.println(pav.getAssociate().getPractice());
+				out.println("</td>");
+				out.println("<td>");
+				out.println(pav.getAssociate().getOnsiteOffshore());
+				out.println("</td>");
+				out.println("<td>");
+				out.println(pav.getAssociate().getRevType());
+				out.println("</td>");
+				out.println("<td>");
+				out.println(pav.getProject().getBio());
+				out.println("</td>");
+				out.println("<td>");
+				out.println(pav.getProject().getProjectId());
+				out.println("</td>");
+				out.println("<td>");
+				out.println(pav.getProject().getProjectName());
+				out.println("</td>");
+				out.println("</tr>");
+			}
+		}
+		//end of if paList is empty
+		
 	}
 
 }

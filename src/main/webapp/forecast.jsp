@@ -17,7 +17,7 @@ Released   : 20131223
 <%@ page import="com.cognizant.revcast.models.ForecastView" %>
 <%@ page import = "com.google.gson.Gson" %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title></title>
+<title>Forecast</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,9 +56,8 @@ Released   : 20131223
 
 <div class="wrapper" >
 	<!--fill order section-->
-	<div id="loader"></div>
 	<div id="tbldiv" class="container">
-<div id="loadedcontents" style="display:none;">
+<div>
 	<table id="fill-table">
 		<tr>
 			<th>

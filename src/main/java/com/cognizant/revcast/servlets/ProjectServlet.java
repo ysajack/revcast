@@ -1,6 +1,7 @@
 package com.cognizant.revcast.servlets;
 
 import com.cognizant.revcast.data.ProjectDAO;
+import com.cognizant.revcast.models.Project;
 import com.cognizant.revcast.models.ProjectAssociateView;
 import com.cognizant.revcast.models.ProjectBean;
 import com.google.appengine.api.utils.SystemProperty;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +56,35 @@ public class ProjectServlet extends HttpServlet {
 		response.getWriter().println("PRJ MSG: " + msg);
 		
 	}
+	
+	@Override
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		ProjectDAO pdao = new ProjectDAO();
+
+		String bio = request.getParameter("bio");
+		String projectId = request.getParameter("projectId");
+		String projectName = request.getParameter("projectName");
+		String type = request.getParameter("type");
+
+		Project project = new Project(bio,projectId,projectName,type,null);
+		
+		if(pdao.addProject(project,null) == "Success") {
+			RequestDispatcher req = request.getRequestDispatcher("admin/success.jsp");
+			try {
+				req.forward(request, response);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			RequestDispatcher req = request.getRequestDispatcher("admin/failure.jsp");
+			try {
+				req.forward(request, response);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public static String getProjectAssociateView() {
 		Gson gs = new Gson();
@@ -87,6 +119,23 @@ public class ProjectServlet extends HttpServlet {
 				paList = prjdao.getProjectAssociateViewByProjectId(prjId);
 			}
 
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Converting to json
+		String str = gs.toJson(paList);
+		return str;
+	}
+	
+	public static String getProjectAssociateViewByAssociateId(String assoId) {
+		Gson gs = new Gson();
+		ProjectDAO prjdao = new ProjectDAO();
+		List<ProjectAssociateView> paList = new ArrayList<ProjectAssociateView>();
+
+		try {
+			paList = prjdao.getProjectAssociateViewByAssociateId(assoId);
+			
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

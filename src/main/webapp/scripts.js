@@ -148,12 +148,64 @@ $(document).ready(function() {
 });
 
 /********************/
-//Loading
+
+/*************Filtering on ADMIN ALLOCATE ASSOCIATES PAGE**************/
+//BIOs dropdown list
 $(document).ready(function() {
-	$.get("forecast", function(res) {
-		if(res != null){
-			document.getElementById("loader").style.display = "none";
-			document.getElementById("loadedcontents").style.display = "block";
-		}		
+	$("#bybio-admin").change(function() {
+		var bioval = $("#bybio-admin").val();
+		$.get("projectDropdown", {
+			bio : bioval
+		}, function(res) {
+			var data = $.parseJSON(res); //parse json
+			// $("#test").text(data); //to display text
+			var select = $('#byproject-admin');
+			select.find('option').remove(); //Remove the list and then re-updated
+			var allProjects = "All Projects";
+			$('<option>').val(allProjects).text(allProjects).appendTo(select); //all projects place holder
+			$.each(data, function(index, value) {
+				$('<option>').val(value.projectId).text(value.projectName).appendTo(select); //storing project id in value, storing project name in text in <option>
+			});
+		});
+		
+		//Nested call - Results list will auto populate for all projects under a bio
+		var prjId = $("#byproject-admin").val();
+		var bioval = $("#bybio-admin").val();
+		var assoId = $("input[name=associateId]").val();
+		var assoName = $("input[name=associateName]").val();
+		$.get("projectFilter", {
+			projectId : prjId,
+			bio : bioval,
+			associateId : assoId,
+			associateName : assoName
+		}, function(res) {
+			//to display in inner html
+			document.getElementById("allocateAssociate").innerHTML = res; //Will overwrite and fill the table by the filter		
+		});
+		
 	});
+});
+
+//Cascading/filtering dropdown projects list
+$(document).ready(function() {
+	$("#byproject-admin").change(function() {
+		var prjId = $("#byproject-admin").val();
+		var bioval = $("#bybio-admin").val();
+		var assoId = $("input[name=associateId]").val();
+		var assoName = $("input[name=associateName]").val();
+		$.get("projectFilter", {
+			projectId : prjId,
+			bio : bioval,
+			associateId : assoId,
+			associateName : assoName
+		}, function(res) {
+			//to display in inner html
+			document.getElementById("allocateAssociate").innerHTML = res; //Will overwrite and fill the table by the filter		
+		});
+	});
+});
+/***************************/
+
+$(document).ready(function() {
+
 });

@@ -733,9 +733,28 @@
 #fill-table th                               {border: 1px solid black;  text-align: center; background-color: #FFCC99;}
 #fill-table td                               {text-align: center;border: 1px solid black;background-color: #F1F1D7}
 #leave-entry                                 {width:350px;}
-#leaveDetails                               {width:450px;}
-#editLeave                                  {width:450px;}
+#leaveDetails                                {width:450px;}
+#editLeave                                   {width:450px;}
 #filterdiv                                   {margin: 20px auto 20px 100px;}
+
+#allocateAssociate                           {width: 100%; margin: auto auto 30px auto;border: 1px solid black;border-collapse: collapse;}
+#allocateAssociate th                        {border: 1px solid black;  text-align: center; background-color: #c6d0f7;}
+#allocateAssociate td                        {text-align: center;border: 1px solid black;background-color: white}
+
+#addAssociate                                {width: 100%; margin: auto auto 30px auto;border: 1px solid black;border-collapse: collapse;}
+#addAssociate th                             {border: 1px solid black;  text-align: center; background-color: #c6d0f7;}
+#addAssociate td                             {text-align: center;border: 1px solid black;background-color: white}
+
+#associateDiv                                {margin: 10px auto auto 55px; }
+
+#allocate-success                            {width: 100%; margin: auto auto auto auto;border: 1px solid black;border-collapse: collapse;}
+#allocate-success th                         {border: 1px solid black;  text-align: center; background-color: #caf7e5;}
+#allocate-success td                         {text-align: center;border: 1px solid black;background-color: white}
+
+#view-allocation                             {width: 100%; margin: auto auto auto auto;border: 1px solid black;border-collapse: collapse;}
+#view-allocation th                          {border: 1px solid black;  text-align: center; background-color: #c6d0f7;}
+#view-allocation td                          {text-align: center;border: 1px solid black;background-color: white}
+
 .button {
 	display: inline-block;
 	padding: .5em 2em;

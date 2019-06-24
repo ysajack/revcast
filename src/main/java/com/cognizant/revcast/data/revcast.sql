@@ -8,7 +8,7 @@ create table project(
   project_id varchar(26) not null,
   prj_name varchar(50) not null,
   prj_type varchar(13) not null,
-  associate_id varchar(26) not null
+  associate_id varchar(26) null
 );
 
 create table associate(
