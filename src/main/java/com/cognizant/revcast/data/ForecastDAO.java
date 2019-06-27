@@ -5,11 +5,14 @@ import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.cognizant.revcast.models.Associate;
 import com.cognizant.revcast.models.ForecastMonth;
 import com.cognizant.revcast.models.ForecastView;
 import com.cognizant.revcast.models.LeavePlanView;
+import com.cognizant.revcast.servlets.UtilityServlet;
 
 public class ForecastDAO {
 	public ForecastView getForecastByAssociate(String assoId) {
@@ -20,6 +23,8 @@ public class ForecastDAO {
 		ForecastView fc = new ForecastView();
 		ForecastMonth m = new ForecastMonth();
 		Associate asso = null;
+		HolidayDAO hdao = new HolidayDAO();
+		HashMap<String,Integer> holidays = new HashMap<String,Integer>();
 		
 		int rate=0;
 		int year = 0;
@@ -41,22 +46,27 @@ public class ForecastDAO {
 			year = Integer.parseInt(lpv.getYear()); //always current year
 			rate = asso.getRate();
 			allocation = asso.getAllocation();
-			 
+						
+			for(Map.Entry<String, String> month : UtilityServlet.getMonth().entrySet()) {
+				int holiday = hdao.getHolidays(lpv.getYear(), month.getValue(), asso.getOnsiteOffshore().toLowerCase());
+				holidays.put(month.getValue(), holiday); //put in key as the month ex. "January"		
+			}
+			
 			//int numOfLeave = lpv.getMonth().getJan();
 			//int totalDays = getTotalWorkDaysInMonth(year,1);
 			//int forecast = calcForecast(totalDays,rate, numOfLeave);
-			m.setJan(calcForecast(getTotalWorkDaysInMonth(year,1),rate, allocation, lpv.getMonth().getJan()));
-			m.setFeb(calcForecast(getTotalWorkDaysInMonth(year,2),rate, allocation, lpv.getMonth().getFeb()));
-			m.setMar(calcForecast(getTotalWorkDaysInMonth(year,3),rate, allocation, lpv.getMonth().getMar()));
-			m.setApr(calcForecast(getTotalWorkDaysInMonth(year,4),rate, allocation, lpv.getMonth().getApr()));
-			m.setMay(calcForecast(getTotalWorkDaysInMonth(year,5),rate, allocation, lpv.getMonth().getMay()));
-			m.setJun(calcForecast(getTotalWorkDaysInMonth(year,6),rate, allocation, lpv.getMonth().getJun()));
-			m.setJul(calcForecast(getTotalWorkDaysInMonth(year,7),rate, allocation, lpv.getMonth().getJul()));
-			m.setAug(calcForecast(getTotalWorkDaysInMonth(year,8),rate, allocation, lpv.getMonth().getAug()));
-			m.setSep(calcForecast(getTotalWorkDaysInMonth(year,9),rate, allocation, lpv.getMonth().getSep()));
-			m.setOct(calcForecast(getTotalWorkDaysInMonth(year,10),rate, allocation, lpv.getMonth().getOct()));
-			m.setNov(calcForecast(getTotalWorkDaysInMonth(year,11),rate, allocation, lpv.getMonth().getNov()));
-			m.setDec(calcForecast(getTotalWorkDaysInMonth(year,12),rate, allocation, lpv.getMonth().getDec()));
+			m.setJan(calcForecast(getTotalWorkDaysInMonth(year,1),rate, allocation, lpv.getMonth().getJan(), holidays.get("January")));
+			m.setFeb(calcForecast(getTotalWorkDaysInMonth(year,2),rate, allocation, lpv.getMonth().getFeb(), holidays.get("February")));
+			m.setMar(calcForecast(getTotalWorkDaysInMonth(year,3),rate, allocation, lpv.getMonth().getMar(), holidays.get("March")));
+			m.setApr(calcForecast(getTotalWorkDaysInMonth(year,4),rate, allocation, lpv.getMonth().getApr(), holidays.get("April")));
+			m.setMay(calcForecast(getTotalWorkDaysInMonth(year,5),rate, allocation, lpv.getMonth().getMay(), holidays.get("May")));
+			m.setJun(calcForecast(getTotalWorkDaysInMonth(year,6),rate, allocation, lpv.getMonth().getJun(), holidays.get("June")));
+			m.setJul(calcForecast(getTotalWorkDaysInMonth(year,7),rate, allocation, lpv.getMonth().getJul(), holidays.get("July")));
+			m.setAug(calcForecast(getTotalWorkDaysInMonth(year,8),rate, allocation, lpv.getMonth().getAug(), holidays.get("August")));
+			m.setSep(calcForecast(getTotalWorkDaysInMonth(year,9),rate, allocation, lpv.getMonth().getSep(), holidays.get("September")));
+			m.setOct(calcForecast(getTotalWorkDaysInMonth(year,10),rate, allocation, lpv.getMonth().getOct(), holidays.get("October")));
+			m.setNov(calcForecast(getTotalWorkDaysInMonth(year,11),rate, allocation, lpv.getMonth().getNov(), holidays.get("November")));
+			m.setDec(calcForecast(getTotalWorkDaysInMonth(year,12),rate, allocation, lpv.getMonth().getDec(), holidays.get("December")));
 			
 			fc.setYear(String.valueOf(year));
 			fc.setForecastMonth(m);
@@ -70,7 +80,7 @@ public class ForecastDAO {
 		}
 	}
 	
-	public static int getTotalWorkDaysInMonth(int year, int month) {
+	public int getTotalWorkDaysInMonth(int year, int month) {
 		LocalDate initial = LocalDate.of(year, month, 1);
 		int last = initial.with(lastDayOfMonth()).getDayOfMonth();
 		int numOfDays = 0;
@@ -86,8 +96,9 @@ public class ForecastDAO {
 		return numOfDays;
 	}
 	
-	public static double calcForecast(int totalDays, int rate, int allocation, int numOfLeave) {
-		double forecast = (((totalDays * 8) * rate) - ((numOfLeave * 8) * rate)) * ((double) allocation/100);
+	public double calcForecast(int totalDays, int rate, int allocation, int numOfLeave, int holidays) {
+		//double forecast = (((totalDays * 8) * rate) - ((numOfLeave * 8) * rate)) * ((double) allocation/100);
+		double forecast = (((totalDays - numOfLeave - holidays)* 8) * rate) * ((double) allocation/100);
 		return forecast;
 	}
 }

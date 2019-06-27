@@ -728,6 +728,12 @@
 		color: #FFFFFF;
 	}
 
+/**Make table rows always stay in single line**/	
+td {
+	overflow: hidden;
+	white-space: nowrap;
+}
+
 #tbldiv                                      {margin: auto auto 50px auto;}
 #fill-table                                  {width: 100%; margin: auto auto 30px auto;border: 1px solid black;border-collapse: collapse;}
 #fill-table th                               {border: 1px solid black;  text-align: center; background-color: #FFCC99;}
@@ -754,6 +760,12 @@
 #view-allocation                             {width: 100%; margin: auto auto auto auto;border: 1px solid black;border-collapse: collapse;}
 #view-allocation th                          {border: 1px solid black;  text-align: center; background-color: #c6d0f7;}
 #view-allocation td                          {text-align: center;border: 1px solid black;background-color: white}
+
+#approve-leave                               {width: 100%; margin: auto auto auto auto;border: 1px solid black;border-collapse: collapse;}
+#approve-leave th                            {border: 1px solid black;  text-align: center; background-color: #bbca9b;}
+#approve-leave td                            {text-align: center;border: 1px solid black;background-color: #f4f5dc}
+
+#approveLeve-btn                             {background:#F1F1D7;}
 
 .button {
 	display: inline-block;

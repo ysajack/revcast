@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.cognizant.revcast.models.ApproveLeaveView;
 import com.cognizant.revcast.models.Associate;
 import com.cognizant.revcast.models.Leave;
 import com.cognizant.revcast.models.LeavePlanView;
 import com.cognizant.revcast.models.Month;
+import com.cognizant.revcast.models.Project;
 
 public class LeaveDAO {
 	public List<Leave> getAllLeavesByAssociate(String assoId) throws ClassNotFoundException, SQLException {
@@ -65,6 +67,60 @@ public class LeaveDAO {
 
 		cnn.close();
 		return leaveList;
+	}
+	
+	public List<ApproveLeaveView> getApproveLeaveViewForAllAssociates() throws ClassNotFoundException, SQLException {
+		List<ApproveLeaveView> list = new ArrayList<ApproveLeaveView>();
+		
+		Connection cnn = DBConnection.getConnection();
+		//sql to get only the records (except status approved) in 3 tables (project,associate,leaveplan) for the current year
+		String sql = "select * from project p, associate a, leaveplan l "+
+		"where p.project_id=a.project_id and p.associate_id=a.associate_id and a.associate_id=l.associate_id and l.leave_status !='Approved' "+
+		"and l.year_taken = (select DISTINCT year_taken from leaveplan order by year_taken desc LIMIT 1) order by p.prj_name asc";
+		
+		PreparedStatement psmt = cnn.prepareStatement(sql);
+		ResultSet rs = psmt.executeQuery();
+
+		while (rs.next()) {
+			//Project
+			String bio = rs.getString("bio");
+			String projectId = rs.getString("p.project_id");
+			String projectName = rs.getString("prj_name");
+			String projectType = rs.getString("prj_type");
+			
+			//Associate
+			String associateId = rs.getString("p.associate_id");
+			String associateName = rs.getString("associate_name");
+			String designation = rs.getString("designation");
+			String status = rs.getString("status");
+			String revcat = rs.getString("rev_type");
+			String practice = rs.getString("practice");
+			String onsiteOffshore = rs.getString("onsite_offshore");
+			String revType = rs.getString("rev_type");
+			String projectStart = rs.getString("prj_start");
+			String projectEnd = rs.getString("prj_end");
+			int allocation = rs.getInt("allocation");
+			int rate = rs.getInt("rate");
+			
+			//Leave
+			int id = rs.getInt("l.id");
+			String year = rs.getString("year_taken");
+			String month = rs.getString("month_taken");
+			int numOfdays = rs.getInt("num_of_days");
+			String dateTaken = rs.getString("date_taken");
+			String leaveStatus = rs.getString("leave_status");
+			String comments = rs.getString("comments");
+
+			Project project = new Project(bio, projectId, projectName, projectType, associateId);
+			Associate associate = new Associate(associateId, associateName, designation, status, revcat, practice,
+					onsiteOffshore, revType, projectStart, projectEnd, allocation, rate, projectId);
+			Leave leave = new Leave(id,year, month, numOfdays, dateTaken, leaveStatus,comments,associateId);
+			
+			list.add(new ApproveLeaveView(project,associate,leave));
+		}
+
+		cnn.close();
+		return list;
 	}
 	
 	public List<LeavePlanView> getLeavePlanViewOfAllAssociates(){
@@ -330,4 +386,45 @@ public class LeaveDAO {
 		return response;
 	}
 	
+	public String approveLeave(String leaveId) {
+		Connection cnn = null;
+		PreparedStatement psmt = null;
+		String response = null;
+		
+		try {
+			cnn = DBConnection.getConnection();
+			String sql = "update leaveplan set leave_status='Approved' where id=?";
+			
+			psmt = cnn.prepareStatement(sql);
+			
+			psmt.setString(1, leaveId);
+
+			psmt.executeUpdate();
+			response = "Success";
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+
+			if (psmt != null) {
+				try {
+					psmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+			if (cnn != null) {
+				try {
+					cnn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+	
+		return response;
+	}
 }

@@ -60,12 +60,12 @@ create table leaveplan(
 
 create table holiday(
   id int not null primary key auto_increment,
-  holiday_year varchar(13) null,
-  holiday_month varchar(13) null,
-  num_of_holidays int(13) null,
+  holiday_year varchar(13) not null,
+  holiday_month varchar(13) not null,
+  num_of_holidays int(13) not null,
   holiday_dates varchar(50) null,
-  comments varchar(50) null,
-  onsite_offshore varchar(13) not null
+  onsite_offshore varchar(13) not null,
+  comments varchar(50) null
 );
 
 

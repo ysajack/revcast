@@ -1,6 +1,7 @@
 package com.cognizant.revcast.servlets;
 
 import com.cognizant.revcast.data.LeaveDAO;
+import com.cognizant.revcast.models.ApproveLeaveView;
 import com.cognizant.revcast.models.Leave;
 import com.cognizant.revcast.models.LeavePlanView;
 //import com.google.appengine.repackaged.com.google.gson.Gson;
@@ -96,6 +97,21 @@ public class LeavePlanServlet extends HttpServlet {
 		lpvList = ldao.getLeavePlanViewOfAllAssociates();
 		
 		String str = gs.toJson(lpvList);
+		return str;
+	}
+	
+	public static String getApproveLeaveViewForAllAssociates() {
+		Gson gs = new Gson();
+		LeaveDAO ldao = new LeaveDAO();
+		List<ApproveLeaveView> list = new ArrayList<ApproveLeaveView>();
+		
+		try {
+			list = ldao.getApproveLeaveViewForAllAssociates();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		String str = gs.toJson(list);
 		return str;
 	}
 	
