@@ -205,6 +205,8 @@ $(document).ready(function() {
 	});
 });
 /***************************/
+
+/*
 //Select an associate to request leave 
 $(document).ready(function() {
 	$("#select-associate").change(function() {
@@ -213,5 +215,5 @@ $(document).ready(function() {
 		//$("div#select-associate select").val(assoId); //It's built in - no need to use
 	});
 });
-
+*/
 

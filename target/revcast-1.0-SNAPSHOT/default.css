@@ -734,7 +734,7 @@ td {
 	white-space: nowrap;
 }
 
-#tbldiv                                      {margin: auto auto 5px auto;}
+#tbldiv                                      {margin: auto auto 5px auto;text-align:left;}
 #fill-table                                  {width: 100%; margin: auto auto 30px auto;border: 1px solid black;border-collapse: collapse;}
 #fill-table th                               {border: 1px solid black;  text-align: center; background-color: #f0d3c0;padding:4px 0px;} /*#FFCC99*/
 #fill-table td                               {text-align: center;border: 1px solid black;} /*background-color: #F1F1D7*/
@@ -836,4 +836,70 @@ td {
 #forecast-table tr:nth-child(even){
 	background: #dae5f4;
 }
+
+/*****Pill Navigation Hover Menu******/
+*
+
+{	
+	margin:0px;
+	padding:0px;
+}
+
+#menu2 ul
+{
+	list-style:none;
+	text-align:center;
+}
+
+#menu2 ul li
+{
+	background-color:#1ABC9C;
+	border: 1px solid white;
+	text-align:center;
+	width: 150px;
+	height:35px;
+	line-height:35px;
+	position:relative;
+	display:inline-block;
+	float:center;
+}
+
+#menu2 ul li a
+{
+	text-decoration:none;
+	color:white;
+	display:block;
+	font-size: 0.90em;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+#menu2 ul li a:hover
+{
+	background-color:#689ebc;
+}
+
+#menu2 ul ul
+{
+	position:absolute;
+	display:none;
+}
+
+#menu2 ul li:hover > ul
+{
+	display:block;
+
+}
+
+#menu2 ul li ul li
+{
+	background-color:#1fd9b2;
+}
+
+#menu2
+{
+	margin-bottom:15px;
+}
+
+/*******End of Pill Navigation Menu******/
 

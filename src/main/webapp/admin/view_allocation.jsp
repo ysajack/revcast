@@ -41,6 +41,43 @@ Released   : 20131223
 </div>
 </div>
 <div id="page-wrapper">
+
+
+<!-- Navigation menu -->
+  <div id="menu2">
+	<ul>
+		<li><a href="../index.jsp">Management</a>
+			<ul>	
+				<li><a href="../index.jsp">Projects</a></li>
+				<li><a href="../resources.jsp">Resources</a></li>
+			    <li><a href="../allocation.jsp">Allocation</a></li>
+			    <li><a href="../leave.jsp">Leave Plan</a></li>
+			    <li><a href="../forecast.jsp">Forecast</a></li>
+			    <!-- <li><a href="../report.jsp">Report</a></li> -->
+			</ul>
+		</li>
+		<li><a href="../associates/request_leave.jsp">Associates</a>
+			<ul>	
+				<li><a href="../associates/request_leave.jsp">Request Leaves</a></li>
+				<li><a href="../associates/view_leave.jsp">Edit Leaves</a></li>
+			</ul>
+		</li>
+		<li><a href="add_associate.jsp">Admin</a>
+			<ul>	
+				<li><a href="add_associate.jsp">Add Associates</a></li>
+				<li><a href="add_project.jsp">Add Projects</a></li>
+				<li><a href="view_allocation.jsp">Update Allocation</a></li>
+				<li><a href="approve_leave.jsp">Approve Leaves</a></li>
+				<li><a href="add_holiday.jsp">Add Holidays</a></li>
+			</ul>
+		</li>
+		
+		<li><a href="../about.jsp">About</a></li>
+	</ul>
+</div>
+<!-- End of Navigation menu -->
+
+<!-- 
 			<div id="menu">
 				<ul>
 					<li class="current_page_item"><a href="add_project.jsp" accesskey="1" title="">Add Projects</a></li>
@@ -51,6 +88,7 @@ Released   : 20131223
 				</ul>
 			</div>
 </div>
+-->
 
 <div class="wrapper" >
 
