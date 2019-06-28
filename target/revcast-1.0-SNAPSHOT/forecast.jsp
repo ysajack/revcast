@@ -56,9 +56,9 @@ Released   : 20131223
 
 <div class="wrapper" >
 	<!--fill order section-->
-	<div id="tbldiv" class="container">
+<div id="tbldiv" class="container">
 <div>
-	<table id="fill-table">
+	<table id="forecast-table">
 		<tr>
 			<th>
 			Project

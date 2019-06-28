@@ -347,15 +347,15 @@ public class LeaveDAO {
 		
 		try {
 			cnn = DBConnection.getConnection();
-			String sql = "update leaveplan set num_of_days=?, date_taken=?, leave_status=?, comments=? where id=?";
+			String sql = "update leaveplan set num_of_days=?, date_taken=?, comments=? where id=?";
 			
 			psmt = cnn.prepareStatement(sql);
 			
 			psmt.setInt(1, leave.getNumOfdays());
 			psmt.setString(2, leave.getDateTaken());
-			psmt.setString(3, leave.getStatus());
-			psmt.setString(4, leave.getComments());
-			psmt.setInt(5, leave.getId());
+			//psmt.setString(3, leave.getStatus()); //Not allowing associate to update status
+			psmt.setString(3, leave.getComments());
+			psmt.setInt(4, leave.getId());
 
 			psmt.executeUpdate();
 			response = "Success";

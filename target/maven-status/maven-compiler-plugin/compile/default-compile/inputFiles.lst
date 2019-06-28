@@ -38,6 +38,7 @@
 /Users/m_379330/Desktop/opt2gae/revcast/src/main/java/com/cognizant/revcast/services/ProjectService.java
 /Users/m_379330/Desktop/opt2gae/revcast/src/main/java/com/cognizant/revcast/models/ProjectBean.java
 /Users/m_379330/Desktop/opt2gae/revcast/src/main/java/com/cognizant/revcast/servlets/LeavePlanServlet.java
+/Users/m_379330/Desktop/opt2gae/revcast/src/main/java/com/cognizant/revcast/servlets/AssociateServlet.java
 /Users/m_379330/Desktop/opt2gae/revcast/src/main/java/com/cognizant/revcast/tests/TestAllocationBean.java
 /Users/m_379330/Desktop/opt2gae/revcast/src/main/java/com/cognizant/revcast/servlets/ProjectFilterServlet.java
 /Users/m_379330/Desktop/opt2gae/revcast/src/main/java/com/cognizant/revcast/tests/TestAssociate.java

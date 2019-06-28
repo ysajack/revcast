@@ -12,7 +12,9 @@ Released   : 20131223
 -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.cognizant.revcast.servlets.LeavePlanServlet" %>
+<%@ page import="com.cognizant.revcast.servlets.AssociateServlet" %>
 <%@ page import="com.cognizant.revcast.models.LeavePlanView" %>
+<%@ page import="com.cognizant.revcast.models.Associate" %>
 <%@ page import="java.util.List" %>
 <%@ page import = "com.google.gson.Gson" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -104,9 +106,29 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 	
 	<tr>
 	
-	<% LeavePlanView lpv = new Gson().fromJson(LeavePlanServlet.getLeavePlanView(), LeavePlanView.class); %>
+	<% List<Associate> list = AssociateServlet.getAllAssociates();
+	String associateId = list.get(0).getAssociateId();
+	String selectedAssociate = request.getParameter("associateId");
+	int e=1;
+	if(selectedAssociate != null){
+		associateId = selectedAssociate;
+		e=0;
+	}
+	LeavePlanView lpv = new Gson().fromJson(LeavePlanServlet.getLeavePlanViewByAssociate(associateId), LeavePlanView.class); %>
+	
+	<!-- Associate selection dropdown -->
+	<form action="request_leave.jsp" method="post"> 
 		<td>
-			<%= lpv.getAssociateId() %>
+			<select id="select-associate" name="associateId" onchange="this.form.submit()">
+				<option>
+					<%= lpv.getAssociateId() %>
+				</option>
+				<%for(int i=e;i<list.size();i++){ 
+					String populatedAssociate = list.get(i).getAssociateId();%>
+					<option value="<%= populatedAssociate %>"><%= populatedAssociate %></option>
+				<%}%>
+			</select>
+	</form>
 		</td>
 		<td>
 			<%= lpv.getYear() %>
@@ -154,8 +176,10 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 	<p>Please enter the info below to request leave</p>
 	<div id="leave-entry">
 	<fieldset>
-	<form action="/leaveRequest" method="post">
+	 <form action="/leaveRequest" method="post">
 			<table style="with: 50%">
+				<!-- Hidden - Just for the purpose of including in the form-->
+				<tr><td><input type="hidden" name="associateId" value="<%= associateId %>"/></td></tr>
 				<tr>
 					<td>Number of Days</td>
 					<td><input type="number" name="num_of_days" value="1" min="1" max="3" onchange="checkNumOfDays(this.value)" required/></td>
@@ -178,7 +202,7 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 			</form>
 	</fieldset>
 	</div>	
-	
+
  	<p></p>
 	<p><strong>*Note:</strong> If more than 3 leave days are requested, please seek out and get approval from your Manager!</p>
 

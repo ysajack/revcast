@@ -66,7 +66,7 @@ Released   : 20131223
 	<!--fill order section-->
 	<div id="tbldiv" class="container">
 
-	<table id="approve-leave">
+	<table id="approve-leave"> 
 		<tr>
 			<th>
 			BIO

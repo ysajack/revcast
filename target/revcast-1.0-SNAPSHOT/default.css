@@ -734,10 +734,11 @@ td {
 	white-space: nowrap;
 }
 
-#tbldiv                                      {margin: auto auto 50px auto;}
+#tbldiv                                      {margin: auto auto 5px auto;}
 #fill-table                                  {width: 100%; margin: auto auto 30px auto;border: 1px solid black;border-collapse: collapse;}
-#fill-table th                               {border: 1px solid black;  text-align: center; background-color: #FFCC99;}
-#fill-table td                               {text-align: center;border: 1px solid black;background-color: #F1F1D7}
+#fill-table th                               {border: 1px solid black;  text-align: center; background-color: #f0d3c0;padding:4px 0px;} /*#FFCC99*/
+#fill-table td                               {text-align: center;border: 1px solid black;} /*background-color: #F1F1D7*/
+
 #leave-entry                                 {width:350px;}
 #leaveDetails                                {width:450px;}
 #editLeave                                   {width:450px;}
@@ -762,8 +763,12 @@ td {
 #view-allocation td                          {text-align: center;border: 1px solid black;background-color: white}
 
 #approve-leave                               {width: 100%; margin: auto auto auto auto;border: 1px solid black;border-collapse: collapse;}
-#approve-leave th                            {border: 1px solid black;  text-align: center; background-color: #bbca9b;}
-#approve-leave td                            {text-align: center;border: 1px solid black;background-color: #f4f5dc}
+#approve-leave th                            {border: 1px solid black;  text-align: center; background-color: #bbca9b;padding:4px 0px;}
+#approve-leave td                            {text-align: center;border: 1px solid black;} /*background-color: #f4f5dc*/
+
+#forecast-table                                  {width: 100%; margin: auto auto 30px auto;border: 1px solid black;border-collapse: collapse;}
+#forecast-table th                               {border: 1px solid black;  text-align: center; background-color: #f0d3c0;}
+#forecast-table td                               {text-align: center;border: 1px solid black;} /*background-color: #F1F1D7*/
 
 #approveLeve-btn                             {background:#F1F1D7;}
 
@@ -783,49 +788,52 @@ td {
 	color: #FFF;
 }
 
-/* Center the loader */
-#loader {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 1;
-  width: 150px;
-  height: 150px;
-  margin: -75px 0 0 -75px;
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
+/******Alternative color rows******/
+#fill-table td{ 
+	padding:7px; border:#4e95f4 1px solid;
+}
+/* provide some minimal visual accomodation for IE8 and below */
+#fill-table tr{
+	background: #b8d1f3;
+}
+/*  Define the background color for all the ODD background rows  */
+#fill-table tr:nth-child(odd){ 
+	background: #b8d1f3;
+}
+/*  Define the background color for all the EVEN background rows  */
+#fill-table tr:nth-child(even){
+	background: #dae5f4;
 }
 
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+#approve-leave td{ 
+	padding:7px; border:#4e95f4 1px solid;
+}
+/* provide some minimal visual accomodation for IE8 and below */
+#approve-leave tr{
+	background: #b8d1f3;
+}
+/*  Define the background color for all the ODD background rows  */
+#approve-leave tr:nth-child(odd){ 
+	background: #b8d1f3;
+}
+/*  Define the background color for all the EVEN background rows  */
+#approve-leave tr:nth-child(even){
+	background: #dae5f4;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+#forecast-table td{ 
+	padding:5px 0px; border:#4e95f4 1px solid;
+}
+/* provide some minimal visual accomodation for IE8 and below */
+#forecast-table tr{
+	background: #b8d1f3;
+}
+/*  Define the background color for all the ODD background rows  */
+#forecast-table tr:nth-child(odd){ 
+	background: #b8d1f3;
+}
+/*  Define the background color for all the EVEN background rows  */
+#forecast-table tr:nth-child(even){
+	background: #dae5f4;
 }
 
-/* Add animation to "page content" */
-.animate-bottom {
-  position: relative;
-  -webkit-animation-name: animatebottom;
-  -webkit-animation-duration: 1s;
-  animation-name: animatebottom;
-  animation-duration: 1s
-}
-
-@-webkit-keyframes animatebottom {
-  from { bottom:-100px; opacity:0 } 
-  to { bottom:0px; opacity:1 }
-}
-
-@keyframes animatebottom { 
-  from{ bottom:-100px; opacity:0 } 
-  to{ bottom:0; opacity:1 }
-}

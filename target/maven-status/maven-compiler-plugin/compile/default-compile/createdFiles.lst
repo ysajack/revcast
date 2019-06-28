@@ -37,6 +37,7 @@ com/cognizant/revcast/servlets/AdminAddAssociateServlet.class
 com/cognizant/revcast/tests/TestAddAssociate.class
 com/cognizant/revcast/tests/TestAPI.class
 com/cognizant/revcast/tests/TestGetHolidays.class
+com/cognizant/revcast/servlets/AssociateServlet.class
 com/cognizant/revcast/services/ProjectService.class
 com/cognizant/revcast/servlets/LeaveDetailsServlet.class
 com/cognizant/revcast/data/LeaveDAO.class

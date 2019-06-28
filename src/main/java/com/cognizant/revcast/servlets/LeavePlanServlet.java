@@ -32,8 +32,8 @@ public class LeavePlanServlet extends HttpServlet {
 	//	String month = request.getParameter("month_taken");
 		int numOfdays = Integer.parseInt(request.getParameter("num_of_days"));
 		String comments = request.getParameter("comments");
-		//String associate_id = request.getParameter("associate_id");
-		String associate_id = "A12345";
+		String associate_id = request.getParameter("associateId");
+		//String associate_id = "A12345";
 		String date_taken=request.getParameter("date_taken_1");
 		String[] arr = date_taken.split("-");
 		String year = arr[0];
@@ -81,6 +81,21 @@ public class LeavePlanServlet extends HttpServlet {
 		
 		try {
 			lpv = (LeavePlanView) ldao.getLeavePlanViewByAssociate("A12345");
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		String str = gs.toJson(lpv);
+		return str;
+	}
+	
+	public static String getLeavePlanViewByAssociate(String associateId) {
+		Gson gs = new Gson();
+		LeaveDAO ldao = new LeaveDAO();
+		LeavePlanView lpv = new LeavePlanView();
+		
+		try {
+			lpv = (LeavePlanView) ldao.getLeavePlanViewByAssociate(associateId);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

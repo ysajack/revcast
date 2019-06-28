@@ -12,9 +12,11 @@ Released   : 20131223
 -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.cognizant.revcast.servlets.LeavePlanServlet" %>
+<%@ page import="com.cognizant.revcast.servlets.AssociateServlet" %>
 <%@ page import="com.cognizant.revcast.models.LeavePlanView" %>
 <%@ page import="com.cognizant.revcast.servlets.LeaveDetailsServlet" %>
 <%@ page import="com.cognizant.revcast.models.Leave" %>
+<%@ page import="com.cognizant.revcast.models.Associate" %>
 <%@ page import="java.util.List" %>
 <%@ page import = "com.google.gson.Gson" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -58,6 +60,17 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 
 <h3 style="text-align:center">Your Current Outstanding Leave Plan (in days)</h3>
 	<table id="fill-table">
+	
+	<% List<Associate> list = AssociateServlet.getAllAssociates();
+	String associateId = list.get(0).getAssociateId();
+	String selectedAssociate = request.getParameter("associateId");
+	int e=1;
+	if(selectedAssociate != null){
+		associateId = selectedAssociate;
+		e=0;
+	}
+	LeavePlanView lpv = new Gson().fromJson(LeavePlanServlet.getLeavePlanViewByAssociate(associateId), LeavePlanView.class); %>
+	
 		<tr>
 			<th>
 			Associate ID
@@ -66,49 +79,60 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 			Year
 			</th>
 			<th>
-			Jan
+			<a href="leave_details.jsp?month_taken=January&associateId=<%=associateId %>">Jan</a>
 			</th>
 			<th>
-			Feb
+			<a href="leave_details.jsp?month_taken=February&associateId=<%=associateId %>">Feb</a>
 			</th>
 			<th>
-			Mar
+			<a href="leave_details.jsp?month_taken=March&associateId=<%=associateId %>">March</a>
 			</th>
 			<th>
-			Apr
+			<a href="leave_details.jsp?month_taken=April&associateId=<%=associateId %>">April</a>
 			</th>
 			<th>
-			May
+			<a href="leave_details.jsp?month_taken=May&associateId=<%=associateId %>">May</a>
 			</th>
 			<th>
-			Jun
+			<a href="leave_details.jsp?month_taken=June&associateId=<%=associateId %>">Jun</a>
 			</th>
 			<th>
-			Jul
+			<a href="leave_details.jsp?month_taken=July&associateId=<%=associateId %>">Jul</a>
 			</th>
 			<th>
-			Aug
+			<a href="leave_details.jsp?month_taken=August&associateId=<%=associateId %>">Aug</a>
 			</th>
 			<th>
-			Sep
+			<a href="leave_details.jsp?month_taken=September&associateId=<%=associateId %>">Sep</a>
 			</th>
 			<th>
-			Oct
+			<a href="leave_details.jsp?month_taken=October&associateId=<%=associateId %>">Oct</a>
 			</th>
 			<th>
-			Nov
+			<a href="leave_details.jsp?month_taken=November&associateId=<%=associateId %>">Nov</a>
 			</th>
 			<th>
-			Dec
+			<a href="leave_details.jsp?month_taken=December&associateId=<%=associateId %>">Dec</a>
 			</th>
 	</tr>
 	
 	<tr>
 	
-	<% LeavePlanView lpv = new Gson().fromJson(LeavePlanServlet.getLeavePlanView(), LeavePlanView.class); %>
+<!-- Associate selection dropdown -->
+	<form action="view_leave.jsp" method="post"> 
 		<td>
-			<%= lpv.getAssociateId() %>
+			<select id="select-associate" name="associateId" onchange="this.form.submit()">
+				<option>
+					<%= lpv.getAssociateId() %>
+				</option>
+				<%for(int i=e;i<list.size();i++){ 
+					String populatedAssociate = list.get(i).getAssociateId();%>
+					<option value="<%= populatedAssociate %>"><%= populatedAssociate %></option>
+				<%}%>
+			</select>
+	</form>
 		</td>
+		
 		<td>
 			<%= lpv.getYear() %>
 		</td>
@@ -181,15 +205,17 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 					<td><input type="text" name="date_taken" value="<%= dates %>" required /></td>
 				</tr>
 				<tr>
-					<td>Status</td>
-					<td><input type="text" name="leave_status" value="<%= status %>" required /></td>
+					<!-- Not allowing associate to edit status -->
+					<!-- <td>Status</td> -->
+					<!-- <td><input type="text" name="leave_status" value="<%= status %>" required /></td> -->
 				</tr>
 				<tr>
 					<td>Comments</td>
 					<td><input type="text" name="comments" value="<%= comments %>" /></td>
 				</tr>
 				<tr >
-				<input type="text" name="associate_id" value="<%=lv.getAssociateId() %>" style="display:none"></input>
+				<!-- Hidden - Just for the purpose to include in the form -->
+				<input type="hidden" name="associate_id" value="<%=associateId %>"></input>
 				</tr>
 			</table>
 			<input type="submit" value="Submit" class="button"/>

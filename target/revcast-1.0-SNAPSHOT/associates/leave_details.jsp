@@ -12,8 +12,10 @@ Released   : 20131223
 -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.cognizant.revcast.servlets.LeavePlanServlet" %>
+<%@ page import="com.cognizant.revcast.servlets.AssociateServlet" %>
 <%@ page import="com.cognizant.revcast.models.LeavePlanView" %>
 <%@ page import="com.cognizant.revcast.models.Leave" %>
+<%@ page import="com.cognizant.revcast.models.Associate" %>
 <%@ page import="com.cognizant.revcast.servlets.LeaveDetailsServlet" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.gson.Gson" %>
@@ -59,6 +61,17 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 
 <h3 style="text-align:center">Your Current Outstanding Leave Plan (in days)</h3>
 	<table id="fill-table">
+	
+	<% List<Associate> list = AssociateServlet.getAllAssociates();
+	String associateId = list.get(0).getAssociateId();
+	String selectedAssociate = request.getParameter("associateId");
+	int e=1;
+	if(selectedAssociate != null){
+		associateId = selectedAssociate;
+		e=0;
+	}
+	LeavePlanView lpv = new Gson().fromJson(LeavePlanServlet.getLeavePlanViewByAssociate(associateId), LeavePlanView.class); %>
+	
 		<tr>
 			<th>
 			Associate ID
@@ -67,49 +80,60 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 			Year
 			</th>
 			<th>
-			<a href="leave_details.jsp?month_taken=January">Jan</a>
+			<a href="leave_details.jsp?month_taken=January&associateId=<%=associateId %>">Jan</a>
 			</th>
 			<th>
-			<a href="leave_details.jsp?month_taken=February">Feb</a>
+			<a href="leave_details.jsp?month_taken=February&associateId=<%=associateId %>">Feb</a>
 			</th>
 			<th>
-			<a href="leave_details.jsp?month_taken=March">March</a>
+			<a href="leave_details.jsp?month_taken=March&associateId=<%=associateId %>">March</a>
 			</th>
 			<th>
-			<a href="leave_details.jsp?month_taken=April">April</a>
+			<a href="leave_details.jsp?month_taken=April&associateId=<%=associateId %>">April</a>
 			</th>
 			<th>
-			<a href="leave_details.jsp?month_taken=May">May</a>
+			<a href="leave_details.jsp?month_taken=May&associateId=<%=associateId %>">May</a>
 			</th>
 			<th>
-			<a href="leave_details.jsp?month_taken=June">Jun</a>
+			<a href="leave_details.jsp?month_taken=June&associateId=<%=associateId %>">Jun</a>
 			</th>
 			<th>
-			<a href="leave_details.jsp?month_taken=July">Jul</a>
+			<a href="leave_details.jsp?month_taken=July&associateId=<%=associateId %>">Jul</a>
 			</th>
 			<th>
-			<a href="leave_details.jsp?month_taken=August">Aug</a>
+			<a href="leave_details.jsp?month_taken=August&associateId=<%=associateId %>">Aug</a>
 			</th>
 			<th>
-			<a href="leave_details.jsp?month_taken=September">Sep</a>
+			<a href="leave_details.jsp?month_taken=September&associateId=<%=associateId %>">Sep</a>
 			</th>
 			<th>
-			<a href="leave_details.jsp?month_taken=October">Oct</a>
+			<a href="leave_details.jsp?month_taken=October&associateId=<%=associateId %>">Oct</a>
 			</th>
 			<th>
-			<a href="leave_details.jsp?month_taken=November">Nov</a>
+			<a href="leave_details.jsp?month_taken=November&associateId=<%=associateId %>">Nov</a>
 			</th>
 			<th>
-			<a href="leave_details.jsp?month_taken=December">Dec</a>
+			<a href="leave_details.jsp?month_taken=December&associateId=<%=associateId %>">Dec</a>
 			</th>
 	</tr>
 	
 	<tr>
-	
-	<% LeavePlanView lpv = new Gson().fromJson(LeavePlanServlet.getLeavePlanView(), LeavePlanView.class); %>
+
+<!-- Associate selection dropdown -->	
+<form action="view_leave.jsp" method="post"> 
 		<td>
-			<%= lpv.getAssociateId() %>
+			<select id="select-associate" name="associateId" onchange="this.form.submit()">
+				<option>
+					<%= lpv.getAssociateId() %>
+				</option>
+				<%for(int i=e;i<list.size();i++){ 
+					String populatedAssociate = list.get(i).getAssociateId();%>
+					<option value="<%= populatedAssociate %>"><%= populatedAssociate %></option>
+				<%}%>
+			</select>
+	</form>
 		</td>
+		
 		<td>
 			<%= lpv.getYear() %>
 		</td>
@@ -199,7 +223,7 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 			<% if(lv.getStatus().equals("Confirmed") || lv.getStatus().equals("Approved")){ %>
 			<button class="button" style="display:none" >Edit</button>
 			<%}else{ %>
-			<a href="edit_leave.jsp?leaveId=<%=lv.getId() %>"  class="button">Edit</a>
+			<a href="edit_leave.jsp?leaveId=<%=lv.getId() %>&associateId=<%=associateId %>"  class="button">Edit</a>
 			<%}%>
 			<a href="view_leave.jsp" class="button">Cancel</a>
 				
