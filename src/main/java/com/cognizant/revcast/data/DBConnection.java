@@ -16,24 +16,14 @@ public class DBConnection {
 		String password = rb.getString("db.password");
 		*/
 	
-		String url = "jdbc:mysql://localhost:3306/revcast";
-		String username = "root";
-		String password = "root";
+		String url = "jdbc:mysql://your_db_url";
+		String username = "your_usr";
+		String password = "your_pw";
 		
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn = DriverManager.getConnection(url, username, password);
 		
 		return conn;
 	}
-	public static Connection getConnection() throws ClassNotFoundException, SQLException{
-			//Connecting to Google Cloud SQL
-		    //String url = "jdbc:mysql://google/revcast?cloudSqlInstance=revcast-rest:us-west1:revcast&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false";
-			String url ="jdbc:mysql://34.83.209.91:3306/revcast";
-			String username = "root";
-			String password = "revcast";
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(url,username,password);
-			return conn;
-		}
 
 }
