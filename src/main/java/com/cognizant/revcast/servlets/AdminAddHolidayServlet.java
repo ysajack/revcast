@@ -1,5 +1,6 @@
 package com.cognizant.revcast.servlets;
 
+import com.cognizant.revcast.clients.HolidayClient;
 import com.cognizant.revcast.data.HolidayDAO;
 import com.cognizant.revcast.models.Holiday;
 //import com.google.appengine.repackaged.com.google.gson.Gson;
@@ -20,7 +21,8 @@ public class AdminAddHolidayServlet extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		HolidayDAO hdao = new HolidayDAO();
+		//HolidayDAO hdao = new HolidayDAO();
+		HolidayClient hdao = new HolidayClient();
 
 		String holYear = request.getParameter("year");
 		String holMonth = request.getParameter("month");
@@ -46,7 +48,7 @@ public class AdminAddHolidayServlet extends HttpServlet {
 
 		Holiday holiday = new Holiday(holYear,holMonth,Integer.parseInt(numOfHol),holDate,onsiteOffshore,comments);
 		
-		if(hdao.addAssociate(holiday).equals("Success")) {
+		if(hdao.addHoliday(holiday).equals("Success")) {
 			RequestDispatcher req = request.getRequestDispatcher("admin/holiday_success.jsp");
 			try {
 				req.forward(request, response);

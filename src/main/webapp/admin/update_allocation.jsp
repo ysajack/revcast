@@ -57,7 +57,7 @@ Released   : 20131223
 				<li><a href="../resources.jsp">Resources</a></li>
 			    <li><a href="../allocation.jsp">Allocation</a></li>
 			    <li><a href="../leave.jsp">Leave Plan</a></li>
-			    <li><a href="../forecast.jsp">Forecast</a></li>
+			 <!--    <li><a href="../forecast.jsp">Forecast</a></li> -->
 			    <!-- <li><a href="../report.jsp">Report</a></li> -->
 			</ul>
 		</li>

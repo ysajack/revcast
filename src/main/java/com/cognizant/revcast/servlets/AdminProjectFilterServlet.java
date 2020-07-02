@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cognizant.revcast.clients.ProjectClient;
 import com.cognizant.revcast.data.ProjectDAO;
 import com.cognizant.revcast.models.Project;
 import com.cognizant.revcast.models.ProjectAssociateView;
+import com.google.gson.Gson;
 
 @WebServlet(name = "AdminProjectFilterServlet", value = "admin/projectFilter")
 public class AdminProjectFilterServlet extends HttpServlet {
@@ -25,27 +27,26 @@ public class AdminProjectFilterServlet extends HttpServlet {
 		String bio = request.getParameter("bio");
 		String associateId = request.getParameter("associateId");
 		String associateName = request.getParameter("associateName");
-		ProjectDAO prjdao = new ProjectDAO();
-		List<ProjectAssociateView> pavList = new ArrayList<ProjectAssociateView>();
+		//ProjectDAO prjdao = new ProjectDAO();
+		ProjectClient prjdao = new ProjectClient();
+		//List<ProjectAssociateView> pavList = new ArrayList<ProjectAssociateView>();
+		String pavList = null;
 		Project prj = null;
 
-		try {
-			if(prjId == null || prjId.equals("") || prjId.equals("All Projects")) {
-				if(!(bio == null || bio.equals("") || bio.equals("All BIOs"))){
-					pavList = prjdao.getProjectAssociateViewByBio(bio);
-				}
-				else {
-					pavList = prjdao.getProjectAssociateView();
-				}
+		if(prjId == null || prjId.equals("") || prjId.equals("All Projects")) {
+			if(!(bio == null || bio.equals("") || bio.equals("All BIOs"))){
+				pavList = prjdao.getProjAssocViewByBio(bio);
 			}
 			else {
-				pavList = prjdao.getProjectAssociateViewByProjectId(prjId);
-				prj = prjdao.getProjectById(prjId);
+				pavList = prjdao.getProjectAssociateView();
 			}
-		
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
 		}
+		else {
+			pavList = prjdao.getProjAssocViewByProjId(prjId);
+			prj = prjdao.getProjectById(prjId);
+		}
+		
+		ProjectAssociateView[] pavArr = new Gson().fromJson(pavList, ProjectAssociateView[].class);
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
@@ -83,7 +84,7 @@ public class AdminProjectFilterServlet extends HttpServlet {
 				"			Rate Card\n" + 
 				"			</th>\n" + 
 				"	</tr>");
-		if(pavList.isEmpty()) {
+		if(pavArr.length==0) {
 			out.println("<tr>");
 			out.println("<td>");
 			out.println(prj.getBio());
@@ -107,7 +108,7 @@ public class AdminProjectFilterServlet extends HttpServlet {
 			out.println("</tr>");
 		}
 		else {
-			for (ProjectAssociateView pav : pavList) {
+			for (ProjectAssociateView pav : pavArr) {
 				out.println("<tr>");
 				out.println("<td>");
 				out.println(pav.getProject().getBio());

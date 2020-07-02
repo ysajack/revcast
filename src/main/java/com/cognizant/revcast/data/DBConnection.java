@@ -21,14 +21,16 @@ public class DBConnection {
 		String password = rb.getString("db.password");
 		*/
 	
-		String url = "jdbc:mysql://localhost:3306/revcast";
-		String username = "root";
-		String password = "root";
+//		String url = "jdbc:mysql://localhost:3306/revcast";
+//		String username = "root";
+//		String password = "root";
+
+		String url = "jdbc:mysql://sql3.freemysqlhosting.net/sql3350592";
+		String username = "sql3350592";
+		String password = "RA5HR32WEP";
 		
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn = DriverManager.getConnection(url, username, password);
-		
-		return conn;
+		return DriverManager.getConnection(url, username, password);
 	}
 	public static Connection getConnection2() throws ClassNotFoundException, SQLException{
 			//Connecting to Google Cloud SQL
@@ -37,8 +39,7 @@ public class DBConnection {
 			String username = "root";
 			String password = "revcast";
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(url,username,password);
-			return conn;
+			return DriverManager.getConnection(url,username,password);
 	}
 	
 public static Connection createConnectionPool() throws SQLException {

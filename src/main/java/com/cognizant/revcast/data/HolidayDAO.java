@@ -9,7 +9,7 @@ import com.cognizant.revcast.models.Holiday;
 
 public class HolidayDAO {
 	
-	public String addAssociate(Holiday holiday) {
+	public String addHoliday(Holiday holiday) {
 		Connection cnn = null;
 		PreparedStatement psmt = null;
 		String response = "";

@@ -1,5 +1,7 @@
 package com.cognizant.revcast.servlets;
 
+import com.cognizant.revcast.clients.AssociateClient;
+import com.cognizant.revcast.clients.ProjectClient;
 import com.cognizant.revcast.data.AssociateDAO;
 import com.cognizant.revcast.data.ProjectDAO;
 import com.cognizant.revcast.models.Associate;
@@ -23,8 +25,11 @@ public class AdminAddAssociateServlet extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		AssociateDAO adao = new AssociateDAO();
-		ProjectDAO pdao = new ProjectDAO();
+		//AssociateDAO adao = new AssociateDAO();
+		//ProjectDAO pdao = new ProjectDAO();
+		AssociateClient adao = new AssociateClient();
+		ProjectClient pdao = new ProjectClient();
+
 		
 	 	String associateId = request.getParameter("associateId");
 		String associateName = request.getParameter("associateName");
@@ -46,24 +51,19 @@ public class AdminAddAssociateServlet extends HttpServlet {
 		Associate associate = new Associate(associateId,associateName,designation,status,revCat,practice,onsiteOffshore,revType,
 				projectStart,projectEnd,Integer.parseInt(allocation),Integer.parseInt(rate),projectId);
 		
-		//Updating mapping to project
-		try {	
-			if(!pdao.isProjectMappedToAssociate(associateId, projectId)) { //If not mapped, expecting false then will negate
-				if(pdao.isProjectLeftUnmapped(projectId)) { 
-					//If there's a null value (left unmapped), then just use the record and update with the mapping
-					projProcRes = pdao.updateProjectAssociateAllocation(associateId,projectId); 
-				}
-				else {
-					Project project = pdao.getProjectById(projectId); 
-					//If there's a new record needed, then just add it
-					projProcRes = pdao.addProject(project,associateId); //add project and allocation, which means adding a new allocation
-				}
+		if(!pdao.isProjectMappedToAssociate(associateId, projectId)) { //If not mapped, expecting false then will negate
+			if(pdao.isProjectLeftUnmapped(projectId)) { 
+				//If there's a null value (left unmapped), then just use the record and update with the mapping
+				projProcRes = pdao.updateProjAssocAlloc(associateId,projectId); 
 			}
 			else {
-				projProcRes = "Success"; //If mapping and allocation exists, do nothing
+				Project project = pdao.getProjectById(projectId); 
+				//If there's a new record needed, then just add it
+				projProcRes = pdao.addProject(project,associateId); //add project and allocation, which means adding a new allocation
 			}
-		} catch (ClassNotFoundException | SQLException e1) {
-			e1.printStackTrace();
+		}
+		else {
+			projProcRes = "Success"; //If mapping and allocation exists, do nothing
 		}
 		
 		if(adao.addAssociate(associate).equals("Success") && projProcRes.equals("Success")) {

@@ -52,14 +52,14 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 				<li><a href="../resources.jsp">Resources</a></li>
 			    <li><a href="../allocation.jsp">Allocation</a></li>
 			    <li><a href="../leave.jsp">Leave Plan</a></li>
-			    <li><a href="../forecast.jsp">Forecast</a></li>
+			<!--     <li><a href="../forecast.jsp">Forecast</a></li> -->
 			    <!-- <li><a href="../report.jsp">Report</a></li> -->
 			</ul>
 		</li>
 		<li><a href="request_leave.jsp">Associates</a>
 			<ul>	
-				<li><a href="request_leave.jsp">Request Leaves</a></li>
-				<li><a href="view_leave.jsp">Edit Leaves</a></li>
+				<li><a href="associates/request_leave.jsp">Request Leaves</a></li>
+				<li><a href="associates/view_leave.jsp">Edit Leaves</a></li>
 			</ul>
 		</li>
 		<li><a href="../admin/add_associate.jsp">Admin</a>

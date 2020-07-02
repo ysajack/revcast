@@ -1,5 +1,6 @@
 package com.cognizant.revcast.servlets;
 
+import com.cognizant.revcast.clients.ProjectClient;
 import com.cognizant.revcast.data.ProjectDAO;
 import com.cognizant.revcast.models.Project;
 import com.cognizant.revcast.models.ProjectAssociateView;
@@ -25,7 +26,7 @@ public class AdminAddProjectServlet extends HttpServlet {
 	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		ProjectDAO pdao = new ProjectDAO();
+	//	ProjectDAO pdao = new ProjectDAO();
 
 		String bio = request.getParameter("bio");
 		String projectId = request.getParameter("projectId");
@@ -35,7 +36,7 @@ public class AdminAddProjectServlet extends HttpServlet {
 
 		Project project = new Project(bio,projectId,projectName,type,null);
 		
-		if(pdao.addProject(project,null) == "Success") {
+		if(new ProjectClient().addProject(project,null).equals("Success")) {
 			RequestDispatcher req = request.getRequestDispatcher("admin/success.jsp");
 			try {
 				req.forward(request, response);
@@ -54,96 +55,23 @@ public class AdminAddProjectServlet extends HttpServlet {
 	}
 
 	public static String getProjectAssociateView() {
-		Gson gs = new Gson();
-		ProjectDAO prjdao = new ProjectDAO();
-		List<ProjectAssociateView> paList = new ArrayList<ProjectAssociateView>();
-
-		try {
-			paList = prjdao.getProjectAssociateView();
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		//Converting to json
-		String str = gs.toJson(paList);
-		return str;
-		//To convert from json to Project object
-				// Project pr = new Gson().fromJson(str, Project.class);
-				// System.out.println(pr);
+		return new ProjectClient().getProjectAssociateView();
 	}
 	
 	public static String getProjectAssociateViewByProjectId(String prjId) {
-		Gson gs = new Gson();
-		ProjectDAO prjdao = new ProjectDAO();
-		List<ProjectAssociateView> paList = new ArrayList<ProjectAssociateView>();
-
-		try {
-			if(prjId == null || prjId.equals("")) {
-				paList = prjdao.getProjectAssociateView();
-			}
-			else {
-				paList = prjdao.getProjectAssociateViewByProjectId(prjId);
-			}
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		//Converting to json
-		String str = gs.toJson(paList);
-		return str;
+		return new ProjectClient().getProjectAssociateView();
 	}
 	
 	public static String getAllDistinctProjects() {
-		Gson gs = new Gson();
-		ProjectDAO prjdao = new ProjectDAO();
-		List<ProjectBean> pjList = new ArrayList<ProjectBean>();
-
-		try {
-			pjList = prjdao.getAllDistinctProjects();
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		//Converting to json
-		String str = gs.toJson(pjList);
-		return str;
+		return new ProjectClient().getAllDistinctProjects();
 	}
 	
 	public static String getAllProjectsByBio(String bio) {
-		Gson gs = new Gson();
-		ProjectDAO prjdao = new ProjectDAO();
-		List<ProjectBean> pjList = new ArrayList<ProjectBean>();
-
-		try {
-			pjList = prjdao.getAllProjectsByBio(bio);
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		//Converting to json
-		String str = gs.toJson(pjList);
-		return str;
+		return new ProjectClient().getAllProjectsByBio(bio);
 	}
 	
 	public static String getAllDistinctBios() {
-		Gson gs = new Gson();
-		ProjectDAO prjdao = new ProjectDAO();
-		List<String> bioList = new ArrayList<String>();
-
-		try {
-			bioList = prjdao.getAllDistinctBios();
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		//Converting to json
-		String str = gs.toJson(bioList);
-		return str;
+		return new ProjectClient().getAllDistinctBios();
 	}
 	
 }

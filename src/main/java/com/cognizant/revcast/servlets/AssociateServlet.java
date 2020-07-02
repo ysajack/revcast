@@ -1,13 +1,17 @@
 package com.cognizant.revcast.servlets;
 
+import com.cognizant.revcast.clients.AssociateClient;
 import com.cognizant.revcast.data.AssociateDAO;
 import com.cognizant.revcast.models.Associate;
+import com.google.gson.Gson;
 
 //import com.google.appengine.repackaged.com.google.gson.Gson;
 //import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -42,12 +46,8 @@ public class AssociateServlet extends HttpServlet {
 	}
 	
 	public static List<Associate> getAllAssociates(){
-		try {
-			return new AssociateDAO().getAllAssociates();
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+		Associate[] a = new Gson().fromJson(new AssociateClient().getAllAssociates(), Associate[].class);
+		return Arrays.asList(a);
 	}
 	
 	

@@ -1,5 +1,6 @@
 package com.cognizant.revcast.servlets;
 
+import com.cognizant.revcast.clients.LeaveClient;
 import com.cognizant.revcast.data.LeaveDAO;
 import com.cognizant.revcast.models.ApproveLeaveView;
 import com.cognizant.revcast.models.Leave;
@@ -26,7 +27,8 @@ public class LeavePlanServlet extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		LeaveDAO ldao = new LeaveDAO();
+		//LeaveDAO ldao = new LeaveDAO();
+		LeaveClient ldao = new LeaveClient();
 		
 	//	String year = request.getParameter("year_taken");
 	//	String month = request.getParameter("month_taken");
@@ -56,7 +58,7 @@ public class LeavePlanServlet extends HttpServlet {
 		
 		Leave leave = new Leave(0,year,month,numOfdays,date_taken,null,comments,associate_id);
 		
-		if(ldao.insertLeaveRequest(leave) == "Success") {
+		if(ldao.insertLeaveRequest(leave).equals("Success")) {
 			RequestDispatcher req = request.getRequestDispatcher("associates/success.jsp");
 			try {
 				req.forward(request, response);
@@ -75,72 +77,23 @@ public class LeavePlanServlet extends HttpServlet {
 	}
 	
 	public static String getLeavePlanView() {
-		Gson gs = new Gson();
-		LeaveDAO ldao = new LeaveDAO();
-		LeavePlanView lpv = new LeavePlanView();
-		
-		try {
-			lpv = (LeavePlanView) ldao.getLeavePlanViewByAssociate("A12345");
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		String str = gs.toJson(lpv);
-		return str;
+		return new LeaveClient().getLeavePlanViewByAssociate("A12345");
 	}
 	
 	public static String getLeavePlanViewByAssociate(String associateId) {
-		Gson gs = new Gson();
-		LeaveDAO ldao = new LeaveDAO();
-		LeavePlanView lpv = new LeavePlanView();
-		
-		try {
-			lpv = (LeavePlanView) ldao.getLeavePlanViewByAssociate(associateId);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		String str = gs.toJson(lpv);
-		return str;
+		return new LeaveClient().getLeavePlanViewByAssociate(associateId);
 	}
 	
 	public static String getLeavePlanViewOfAllAssociates() {
-		Gson gs = new Gson();
-		LeaveDAO ldao = new LeaveDAO();
-		List<LeavePlanView> lpvList = new ArrayList<LeavePlanView>();
-		
-		lpvList = ldao.getLeavePlanViewOfAllAssociates();
-		
-		String str = gs.toJson(lpvList);
-		return str;
+		return new LeaveClient().getLeavePlanViewOfAllAssociates();
 	}
 	
 	public static String getApproveLeaveViewForAllAssociates() {
-		Gson gs = new Gson();
-		LeaveDAO ldao = new LeaveDAO();
-		List<ApproveLeaveView> list = new ArrayList<ApproveLeaveView>();
-		
-		try {
-			list = ldao.getApproveLeaveViewForAllAssociates();
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		String str = gs.toJson(list);
-		return str;
+		return new LeaveClient().getApproveLeaveViewForAllAssociates();
 	}
 	
 	public static String getCurrentYear() {
-		LeaveDAO ldao = new LeaveDAO();
-		String year = null;
-		try {
-			year = ldao.getCurrentYear();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return year;
+		return new LeaveClient().getCurrentYear();
 	}
 	
 	public HashMap<String,String> getMonth() {

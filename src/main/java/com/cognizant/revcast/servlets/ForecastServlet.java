@@ -1,5 +1,7 @@
 package com.cognizant.revcast.servlets;
 
+import com.cognizant.revcast.clients.AssociateClient;
+import com.cognizant.revcast.clients.ProjectClient;
 import com.cognizant.revcast.data.AssociateDAO;
 import com.cognizant.revcast.data.ForecastDAO;
 import com.cognizant.revcast.data.ProjectDAO;
@@ -33,38 +35,23 @@ public class ForecastServlet extends HttpServlet {
 	}
 
 	public static String getProjectAssociateView() {
-		Gson gs = new Gson();
-		ProjectDAO prjdao = new ProjectDAO();
-		List<ProjectAssociateView> paList = new ArrayList<ProjectAssociateView>();
-
-		try {
-			paList = prjdao.getProjectAssociateView();
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-	
-		//Converting to json
-		String str = gs.toJson(paList);
-		return str;
+		return new ProjectClient().getProjectAssociateView();
 	}
 
 	public static String getForecastOfAllAssociates() {
-		AssociateDAO adao = new AssociateDAO();
+		//AssociateDAO adao = new AssociateDAO();
 		ForecastDAO fdao = new ForecastDAO();
+		AssociateClient adao = new AssociateClient();
+		
+		
 		Gson gs = new Gson();
 		List<ForecastView> fcvList = new ArrayList<ForecastView>();
 		
-		try {
-			List<Associate> assoList = adao.getAllAssociates();
-			
-			for(Associate asso : assoList) {
-				ForecastView lpv = fdao.getForecastByAssociate(asso.getAssociateId());
-				fcvList.add(lpv);
-			}
-			
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+		Associate[] assoList = new Gson().fromJson(adao.getAllAssociates(),Associate[].class);
+		
+		for(Associate asso : assoList) {
+			ForecastView lpv = fdao.getForecastByAssociate(asso.getAssociateId());
+			fcvList.add(lpv);
 		}
 		
 		String str = gs.toJson(fcvList);

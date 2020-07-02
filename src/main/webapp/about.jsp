@@ -54,7 +54,7 @@ Released   : 20131223
 				<li><a href="index.jsp">Projects</a></li>
 			    <li><a href="allocation.jsp">Allocation</a></li>
 			    <li><a href="leave.jsp">Leave Plan</a></li>
-			    <li><a href="forecast.jsp">Forecast</a></li>
+			 <!--    <li><a href="forecast.jsp">Forecast</a></li> -->
 			    <!-- <li><a href="report.jsp">Report</a></li> -->
 			</ul>
 		</li>
@@ -87,7 +87,7 @@ Released   : 20131223
 	<h2>This app is built in:</h2>
 	<br>
 		<ul>
-			<li>Java, JSP, Servlet, Java Rest Services</li>
+			<li>Java, JSP, Servlet, Java Rest Services <a href="http://revcast-rest.appspot.com/">http://revcast-rest.appspot.com/</a> </li>
 			<li>App and Services hosted in Google App Engine</li>
 			<li>Connecting to MySQL hosted in Google Cloud SQL</li>
 		</ul>
@@ -116,14 +116,14 @@ Released   : 20131223
 	<h2>Other Applications:</h2>
 	<br>
 	<ul>
+			<li>RX2U - Angular 4 and Java Rest Services hosted in Google Firebase, Google Compute Engine and Google Cloud SQL:</li>
+			<li><a href="https://rx2u-ng4.firebaseapp.com/">https://rx2u-ng4.firebaseapp.com/</a></li>
+			<br>
 			<li>RX2U - Python Flask Neo4J hosted in Heroku and Google Compute Engine:</li>
 			<li><a href="https://rx2u-pyflask.herokuapp.com/">https://rx2u-pyflask.herokuapp.com/</a></li>
 			<br>
-			<li>RX2U - Angular 4 and Java Rest Services hosted in Google Firebase, Google Compute Engine and Google Cloud SQL:</li>
-			<li><a href="https://rx2u-ng4.firebaseapp.com/">https://rx2u-ng4.firebaseapp.com//</a></li>
-			<br>
-			<li>PHO-SG - PHP and MySQL hosted in 000WebHost:</li>
-			<li><a href="http://phosg.000webhostapp.com/">http://phosg.000webhostapp.com/</a></li>
+			<li>PHO-SAIGON - PHP and MySQL hosted in 000WebHost:</li>
+			<li><a href="https://pho-saigon.000webhostapp.com/">https://pho-saigon.000webhostapp.com/</a></li>
 	</ul>
 
 <div> <!-- an gian -->	

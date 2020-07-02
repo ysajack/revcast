@@ -1,5 +1,8 @@
 package com.cognizant.revcast.models;
 
+import javax.ws.rs.FormParam;
+import javax.ws.rs.QueryParam;
+
 public class Project {
 	String bio;
 	String projectId;
@@ -7,6 +10,7 @@ public class Project {
 	String projectType;
 	String associateId;
 	
+	public Project() {}
 	public Project(String bio, String projectId, String projectName, String projectType, String associateId) {
 		super();
 		this.bio = bio;
@@ -65,5 +69,6 @@ public class Project {
 	public void setAssociateId(String associateId) {
 		this.associateId = associateId;
 	}
+
 	
 }

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cognizant.revcast.clients.LeaveClient;
 import com.cognizant.revcast.data.LeaveDAO;
 import com.cognizant.revcast.models.Leave;
 import com.google.gson.Gson;
@@ -23,7 +24,8 @@ public class LeaveDetailsServlet extends HttpServlet {
 	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		LeaveDAO ldao = new LeaveDAO();
+		//LeaveDAO ldao = new LeaveDAO();
+		LeaveClient ldao = new LeaveClient();
 		
 		String lid = request.getParameter("leaveId");
 		int id = Integer.valueOf(lid);
@@ -59,37 +61,11 @@ public class LeaveDetailsServlet extends HttpServlet {
 	}
 
 	public static String getAllLeaveDetails(String yr,String mo,String assoId){
-		Gson gs = new Gson();
-		LeaveDAO ldao = new LeaveDAO();
-		List<Leave> leaveList = new ArrayList<Leave>();
-	//	String err="";
-		
-		try {
-			leaveList = ldao.getAllLeaveDetails(yr, mo, assoId);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-			//err = e.toString();
-		}
-		
-		String str= gs.toJson(leaveList);
-		return str;
+		return new LeaveClient().getAllLeaveDetails(yr, mo, assoId);
 	}
 	 
 	public static String getLeaveById(String id) {
-		Gson gs = new Gson();
-		LeaveDAO ldao = new LeaveDAO();
-		Leave lv = null;
-		
-		try {
-			lv = (Leave) ldao.getLeaveById(id);
-			
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		String str = gs.toJson(lv);
-		return str;
+		return new LeaveClient().getLeaveById(id);
 	}
-	
 
 }

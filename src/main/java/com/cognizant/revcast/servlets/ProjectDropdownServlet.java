@@ -1,5 +1,6 @@
 package com.cognizant.revcast.servlets;
 
+import com.cognizant.revcast.clients.ProjectClient;
 import com.cognizant.revcast.data.ProjectDAO;
 import com.cognizant.revcast.models.ProjectBean;
 import com.google.gson.Gson;
@@ -20,27 +21,21 @@ public class ProjectDropdownServlet extends HttpServlet {
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {	
-		ProjectDAO prjdao = new ProjectDAO();
-		Gson gs = new Gson();
-		List<ProjectBean> prjList = new ArrayList<ProjectBean>();
+		//ProjectDAO prjdao = new ProjectDAO();
+		ProjectClient prjdao = new ProjectClient();
+		String prjList = "";
 
 		String bio = request.getParameter("bio");
 	
-		try {
-			if(bio.equals("All BIOs")) {
-				prjList = prjdao.getAllDistinctProjects();
-			}
-			else {
-				prjList = prjdao.getAllProjectsByBio(bio);
-			}
-			
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+		if(bio.equals("All BIOs")) {
+			prjList = prjdao.getAllDistinctProjects();
 		}
-		String str = gs.toJson(prjList);
+		else {
+			prjList = prjdao.getAllProjectsByBio(bio);
+		}
 		
 		response.setContentType("text/plain");	
-		response.getWriter().println(str);
+		response.getWriter().println(prjList);
 				
 	}
 

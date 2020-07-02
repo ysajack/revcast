@@ -1,5 +1,7 @@
 package com.cognizant.revcast.servlets;
 
+import com.cognizant.revcast.clients.AssociateClient;
+import com.cognizant.revcast.clients.ProjectClient;
 import com.cognizant.revcast.data.AssociateDAO;
 import com.cognizant.revcast.data.ProjectDAO;
 import com.cognizant.revcast.models.AllocationBean;
@@ -24,8 +26,10 @@ public class AdminUpdateAllocationServlet extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		AssociateDAO adao = new AssociateDAO();
-		ProjectDAO pdao = new ProjectDAO();
+//		AssociateDAO adao = new AssociateDAO();
+		AssociateClient adao = new AssociateClient();
+		//ProjectDAO pdao = new ProjectDAO();
+		ProjectClient pdao = new ProjectClient();
 		
 	 	String associateId = request.getParameter("associateId");
 		String associateName = request.getParameter("associateName");
@@ -47,35 +51,31 @@ public class AdminUpdateAllocationServlet extends HttpServlet {
 		Associate associate = new Associate(associateId,associateName,designation,status,revCat,practice,onsiteOffshore,revType,
 				projectStart,projectEnd,Integer.parseInt(allocation),Integer.parseInt(rate),projectId);
 		
-		try {
-			AllocationBean al = new AllocationBean(associateId,projectId,projectStart,
-					projectEnd,Integer.parseInt(allocation),Integer.parseInt(rate));
-			
-			//Processing Associate
-			if(adao.isAssociateExistingInProject(associateId, projectId)) {
-				assoProcRes = adao.updateAssociateAllocation(al);
+		AllocationBean al = new AllocationBean(associateId,projectId,projectStart,
+				projectEnd,Integer.parseInt(allocation),Integer.parseInt(rate));
+		
+		//Processing Associate
+		if(adao.isAssociateExistingInProject(associateId, projectId)) {
+			assoProcRes = adao.updateAssociateAllocation(al);
+		}
+		else {
+			assoProcRes = adao.addAssociate(associate); //Add a new record
+		}
+		
+		//Processing Project
+		if(!pdao.isProjectMappedToAssociate(associateId, projectId)) { //expecting false then negate it
+			if(pdao.isProjectLeftUnmapped(projectId)) {
+				//If there's a null value (left unmapped), then just use the record and update with the mapping
+				projProcRes = pdao.updateProjAssocAlloc(associateId,projectId);
 			}
 			else {
-				assoProcRes = adao.addAssociate(associate); //Add a new record
+				Project project = pdao.getProjectById(projectId); 
+				//If there's a new record needed, then just add it
+				projProcRes = pdao.addProject(project,associateId); //add project and allocation, which means adding a new allocation
 			}
-			
-			//Processing Project
-			if(!pdao.isProjectMappedToAssociate(associateId, projectId)) { //expecting false then negate it
-				if(pdao.isProjectLeftUnmapped(projectId)) {
-					//If there's a null value (left unmapped), then just use the record and update with the mapping
-					projProcRes = pdao.updateProjectAssociateAllocation(associateId,projectId);
-				}
-				else {
-					Project project = pdao.getProjectById(projectId); 
-					//If there's a new record needed, then just add it
-					projProcRes = pdao.addProject(project,associateId); //add project and allocation, which means adding a new allocation
-				}
-			}
-			else {
-				projProcRes = "Success"; //If mapping and allocation exists, do nothing
-			}
-		} catch (ClassNotFoundException | SQLException e1) {
-			e1.printStackTrace();
+		}
+		else {
+			projProcRes.equals("Success"); //If mapping and allocation exists, do nothing
 		}
 		
 		if(assoProcRes.equals("Success") && projProcRes.equals("Success")) {

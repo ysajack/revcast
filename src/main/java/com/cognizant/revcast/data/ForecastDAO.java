@@ -86,7 +86,7 @@ public class ForecastDAO {
 		int numOfDays = 0;
 
 		for (int i = 1; i <= last; i++) {
-			DayOfWeek day = LocalDate.of(2019, month, i).getDayOfWeek();
+			DayOfWeek day = LocalDate.of(2020, month, i).getDayOfWeek();
 
 			if (!(day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY)) {
 				numOfDays++;

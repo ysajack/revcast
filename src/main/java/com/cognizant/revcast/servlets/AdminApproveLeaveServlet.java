@@ -1,5 +1,6 @@
 package com.cognizant.revcast.servlets;
 
+import com.cognizant.revcast.clients.LeaveClient;
 import com.cognizant.revcast.data.LeaveDAO;
 //import com.google.appengine.repackaged.com.google.gson.Gson;
 //import com.google.gson.Gson;
@@ -19,11 +20,12 @@ public class AdminApproveLeaveServlet extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		LeaveDAO ldao = new LeaveDAO();
+		//LeaveDAO ldao = new LeaveDAO();
+		LeaveClient ldao = new LeaveClient();
 		
 		String leaveId = request.getParameter("leaveId");
 	
-		if(ldao.approveLeave(leaveId) == "Success") {
+		if(ldao.approveLeave(leaveId).equals("Success")) {
 			RequestDispatcher req = request.getRequestDispatcher("admin/approve_success.jsp");
 			try {
 				req.forward(request, response);

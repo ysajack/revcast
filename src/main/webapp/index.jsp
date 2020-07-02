@@ -53,7 +53,7 @@ Released   : 20131223
 				<li><a href="index.jsp">Projects</a></li>
 			    <li><a href="allocation.jsp">Allocation</a></li>
 			    <li><a href="leave.jsp">Leave Plan</a></li>
-			    <li><a href="forecast.jsp">Forecast</a></li>
+			<!--     <li><a href="forecast.jsp">Forecast</a></li> -->
 			    <!-- <li><a href="report.jsp">Report</a></li> -->
 			</ul>
 		</li>
@@ -94,6 +94,10 @@ Released   : 20131223
 -->
 
 <div class="wrapper" >
+<%-- <div>
+<p>PROJECT JSON: </p>
+<p><%= new Client().getProjects()%></p>
+</div> --%>
 
 <div id="filterdiv">
 	<table style="width:20%">

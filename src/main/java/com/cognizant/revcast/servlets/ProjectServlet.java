@@ -1,5 +1,6 @@
 package com.cognizant.revcast.servlets;
 
+import com.cognizant.revcast.clients.ProjectClient;
 import com.cognizant.revcast.data.ProjectDAO;
 import com.cognizant.revcast.models.Project;
 import com.cognizant.revcast.models.ProjectAssociateView;
@@ -25,41 +26,10 @@ import javax.servlet.http.HttpServletResponse;
 public class ProjectServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	//For smoke
-	@Override
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {	
-		Gson gs = new Gson();
-		ProjectDAO prjdao = new ProjectDAO();
-	
-		List<ProjectAssociateView> paList = new ArrayList<ProjectAssociateView>();
-		String msg = "";
-		try {
-			paList = prjdao.getProjectAssociateView();
-			
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-			msg=e.toString();
-		}
-		
-		//Converting to json
-		String str = gs.toJson(paList);
-		
-		
-		Properties properties = System.getProperties();
-		response.setContentType("text/plain");
-		
-		response.getWriter().println("Hello App Engine - Standard using " + SystemProperty.version.get() + " Java "
-				+ properties.get("java.specification.version"));
-		
-		response.getWriter().println("PRJ STR: " + str);
-		response.getWriter().println("PRJ MSG: " + msg);
-		
-	}
-	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		ProjectDAO pdao = new ProjectDAO();
+		//ProjectDAO pdao = new ProjectDAO();
+		ProjectClient pdao =new ProjectClient();
 
 		String bio = request.getParameter("bio");
 		String projectId = request.getParameter("projectId");
@@ -68,7 +38,7 @@ public class ProjectServlet extends HttpServlet {
 
 		Project project = new Project(bio,projectId,projectName,type,null);
 		
-		if(pdao.addProject(project,null) == "Success") {
+		if(pdao.addProject(project,null).equals("Success")) {
 			RequestDispatcher req = request.getRequestDispatcher("admin/success.jsp");
 			try {
 				req.forward(request, response);
@@ -87,113 +57,62 @@ public class ProjectServlet extends HttpServlet {
 	}
 
 	public static String getProjectAssociateView() {
-		Gson gs = new Gson();
-		ProjectDAO prjdao = new ProjectDAO();
-		List<ProjectAssociateView> paList = new ArrayList<ProjectAssociateView>();
-
-		try {
-			paList = prjdao.getProjectAssociateView();
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		//Converting to json
-		String str = gs.toJson(paList);
-		return str;
-		//To convert from json to Project object
-				// Project pr = new Gson().fromJson(str, Project.class);
-				// System.out.println(pr);
+		return new ProjectClient().getProjectAssociateView();
 	}
 	
-	public static String getProjectAssociateViewByProjectId(String prjId) {
-		Gson gs = new Gson();
-		ProjectDAO prjdao = new ProjectDAO();
-		List<ProjectAssociateView> paList = new ArrayList<ProjectAssociateView>();
-
-		try {
-			if(prjId == null || prjId.equals("")) {
-				paList = prjdao.getProjectAssociateView();
-			}
-			else {
-				paList = prjdao.getProjectAssociateViewByProjectId(prjId);
-			}
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		//Converting to json
-		String str = gs.toJson(paList);
-		return str;
+	public static String getProjectAssociateViewByProjectId(String projId) {
+		return new ProjectClient().getProjAssocViewByProjId(projId);
 	}
 	
-	public static String getProjectAssociateViewByAssociateId(String assoId) {
-		Gson gs = new Gson();
-		ProjectDAO prjdao = new ProjectDAO();
-		List<ProjectAssociateView> paList = new ArrayList<ProjectAssociateView>();
-
-		try {
-			paList = prjdao.getProjectAssociateViewByAssociateId(assoId);
-			
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		//Converting to json
-		String str = gs.toJson(paList);
-		return str;
+	public static String getProjectAssociateViewByAssociateId(String assocId) {
+		return new ProjectClient().getProjAssocViewByAssocId(assocId);
 	}
 	
 	public static String getAllDistinctProjects() {
-		Gson gs = new Gson();
-		ProjectDAO prjdao = new ProjectDAO();
-		List<ProjectBean> pjList = new ArrayList<ProjectBean>();
-
-		try {
-			pjList = prjdao.getAllDistinctProjects();
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		//Converting to json
-		String str = gs.toJson(pjList);
-		return str;
+		return new ProjectClient().getAllDistinctProjects();
 	}
 	
 	public static String getAllProjectsByBio(String bio) {
-		Gson gs = new Gson();
-		ProjectDAO prjdao = new ProjectDAO();
-		List<ProjectBean> pjList = new ArrayList<ProjectBean>();
-
-		try {
-			pjList = prjdao.getAllProjectsByBio(bio);
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		//Converting to json
-		String str = gs.toJson(pjList);
-		return str;
+		return new ProjectClient().getAllProjectsByBio(bio);
 	}
 	
 	public static String getAllDistinctBios() {
-		Gson gs = new Gson();
-		ProjectDAO prjdao = new ProjectDAO();
-		List<String> bioList = new ArrayList<String>();
+		return new ProjectClient().getAllDistinctBios();
+	}
+	
 
-		try {
-			bioList = prjdao.getAllDistinctBios();
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+	//********For smoke********//
+		@Override
+		public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {	
+//			Gson gs = new Gson();
+//			ProjectDAO prjdao = new ProjectDAO();
+//		
+//			List<ProjectAssociateView> paList = new ArrayList<ProjectAssociateView>();
+//			String msg = "";
+//			try {
+//				paList = prjdao.getProjectAssociateView();
+//				
+//
+//			} catch (ClassNotFoundException | SQLException e) {
+//				e.printStackTrace();
+//				msg=e.toString();
+//			}
+//			
+//			//Converting to json
+//			String str = gs.toJson(paList);
+			
+			String str = new ProjectClient().getProjectAssociateView();
+			
+			Properties properties = System.getProperties();
+			response.setContentType("text/plain");
+			
+			response.getWriter().println("Hello App Engine - Standard using " + SystemProperty.version.get() + " Java "
+					+ properties.get("java.specification.version"));
+			
+			response.getWriter().println("PRJ STR: " + str);
+		//	response.getWriter().println("PRJ MSG: " + msg);
+			
 		}
 		
-		//Converting to json
-		String str = gs.toJson(bioList);
-		return str;
-	}
 	
 }
